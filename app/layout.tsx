@@ -1,12 +1,14 @@
 import '@mantine/core/styles.css';
+import './global.css';
 
 import React from 'react';
 import { ColorSchemeScript, mantineHtmlProps, MantineProvider } from '@mantine/core';
 import { theme } from '../theme';
 
 export const metadata = {
-  title: 'Mantine Next.js template',
-  description: 'I am using Mantine with Next.js!',
+  title: 'Frontend Mentor | Product feedback app',
+  description:
+    'A full-stack product feedback app built with Next.js. Users can submit, upvote, and comment on feature requests to help prioritize product development.',
 };
 
 export default function RootLayout({ children }: { children: any }) {
@@ -14,7 +16,6 @@ export default function RootLayout({ children }: { children: any }) {
     <html lang="en" {...mantineHtmlProps}>
       <head>
         <ColorSchemeScript />
-        <link rel="shortcut icon" href="/favicon.svg" />
         <meta
           name="viewport"
           content="minimum-scale=1, initial-scale=1, width=device-width, user-scalable=no"
