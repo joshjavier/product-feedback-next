@@ -1,0 +1,106 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id(map: "pk_user") @default(autoincrement())
+  username  String   @unique(map: "unique_username") @db.VarChar(30)
+  password  String   @db.Char(60)
+  name      String   @db.VarChar(100)
+  avatarUrl String?  @map("avatar_url") @db.VarChar(1000)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @map("updated_at")
+
+  feedbackRequests FeedbackRequest[] @relation("UserFeedbackRequests")
+  comments         Comment[]         @relation("CommentAuthor")
+  replies          Comment[]         @relation("UserReplies")
+  upvotes          Upvote[]
+
+  @@map("user")
+}
+
+model Status {
+  id       Int               @id(map: "pk_status") @default(autoincrement())
+  name     String            @db.VarChar(50)
+  requests FeedbackRequest[]
+
+  @@map("status")
+}
+
+model Category {
+  id       Int               @id(map: "pk_category") @default(autoincrement())
+  name     String            @db.VarChar(50)
+  requests FeedbackRequest[]
+
+  @@map("category")
+}
+
+model FeedbackRequest {
+  id          Int      @id(map: "pk_feedback_request") @default(autoincrement())
+  title       String   @unique(map: "unique_feedback") @db.VarChar(255)
+  description String
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @default(now()) @map("updated_at")
+
+  statusId   Int  @map("status_id")
+  categoryId Int  @map("category_id")
+  userId     Int? @map("user_id")
+
+  status   Status   @relation(fields: [statusId], references: [id], map: "fk_status_feedback_request")
+  category Category @relation(fields: [categoryId], references: [id], map: "fk_category_feedback_request")
+  user     User?    @relation("UserFeedbackRequests", fields: [userId], references: [id], map: "fk_user_feedback_request", onDelete: SetNull)
+
+  comments Comment[]
+  upvotes  Upvote[]
+
+  @@index([statusId], map: "idx_feedback_by_status")
+  @@index([categoryId], map: "idx_feedback_by_category")
+  @@map("feedback_request")
+}
+
+model Comment {
+  id        Int      @id(map: "pk_comment") @default(autoincrement())
+  content   String   @db.VarChar(250)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @map("updated_at")
+
+  feedbackRequestId Int  @map("feedback_request_id")
+  userId            Int  @map("user_id")
+  parentCommentId   Int? @map("parent_comment_id")
+  replyToUserId     Int? @map("reply_to_user_id")
+
+  feedbackRequest FeedbackRequest @relation(fields: [feedbackRequestId], references: [id], map: "fk_feedback_request_comment", onDelete: Cascade)
+  author          User            @relation("CommentAuthor", fields: [userId], references: [id], map: "fk_user_comment")
+  parentComment   Comment?        @relation("CommentReplies", fields: [parentCommentId], references: [id], map: "fk_comment_reply", onDelete: Cascade)
+  replies         Comment[]       @relation("CommentReplies")
+  replyToUser     User?           @relation("UserReplies", fields: [replyToUserId], references: [id], map: "fk_user_reply")
+
+  @@index([feedbackRequestId], map: "idx_comment_count")
+  @@index([parentCommentId], map: "idx_comment_thread")
+  @@map("comment")
+}
+
+model Upvote {
+  userId            Int      @map("user_id")
+  feedbackRequestId Int      @map("feedback_request_id")
+  createdAt         DateTime @default(now()) @map("created_at")
+
+  user            User            @relation(fields: [userId], references: [id], map: "fk_user_upvote", onDelete: Cascade)
+  feedbackRequest FeedbackRequest @relation(fields: [feedbackRequestId], references: [id], map: "fk_feedback_request_upvote", onDelete: Cascade)
+
+  @@id([userId, feedbackRequestId], map: "pk_upvote")
+  @@index([feedbackRequestId], map: "idx_upvote_count")
+  @@map("upvote")
+}

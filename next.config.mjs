@@ -13,6 +13,7 @@ export default withBundleAnalyzer({
   experimental: {
     optimizePackageImports: ['@mantine/core', '@mantine/hooks'],
   },
+  serverExternalPackages: ['@prisma/client', './prisma/client'],
 });
 
 initOpenNextCloudflareForDev();
