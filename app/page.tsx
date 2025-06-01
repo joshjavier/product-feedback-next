@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { VisuallyHidden } from '@mantine/core';
+import { TitleCard } from '@/components/TitleCard';
 import { getDb } from '@/lib/db';
 
 export default async function SuggestionsPage() {
@@ -16,10 +17,7 @@ export default async function SuggestionsPage() {
 
   return (
     <>
-      <div>
-        <p>Frontend Mentor</p>
-        <h1>Feedback Board</h1>
-      </div>
+      <TitleCard />
       <div>
         <VisuallyHidden>Categories</VisuallyHidden>
         <ul>
