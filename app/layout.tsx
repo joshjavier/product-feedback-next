@@ -3,6 +3,7 @@ import './global.css';
 
 import React from 'react';
 import { ColorSchemeScript, mantineHtmlProps, MantineProvider } from '@mantine/core';
+import { jost } from '@/fonts';
 import { theme } from '../theme';
 
 export const metadata = {
@@ -13,7 +14,7 @@ export const metadata = {
 
 export default function RootLayout({ children }: { children: any }) {
   return (
-    <html lang="en" {...mantineHtmlProps}>
+    <html lang="en" {...mantineHtmlProps} className={jost.className}>
       <head>
         <ColorSchemeScript />
         <meta
@@ -22,7 +23,9 @@ export default function RootLayout({ children }: { children: any }) {
         />
       </head>
       <body>
-        <MantineProvider theme={theme}>{children}</MantineProvider>
+        <MantineProvider theme={theme}>
+          <main>{children}</main>
+        </MantineProvider>
       </body>
     </html>
   );
