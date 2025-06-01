@@ -1,16 +1,27 @@
 import Link from 'next/link';
-import { VisuallyHidden } from '@mantine/core';
+import { CategoryFilter } from '@/components/CategoryFilter';
 import { TitleCard } from '@/components/TitleCard';
 import { getDb } from '@/lib/db';
 
-export default async function SuggestionsPage() {
+interface SuggestionsPageProps {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}
+
+export default async function SuggestionsPage({ searchParams }: SuggestionsPageProps) {
+  const { category } = await searchParams;
   const db = getDb();
   const categories = await db.category.findMany();
   const statusesWithCount = await db.status.findMany({
     include: { _count: { select: { requests: true } } },
   });
   const suggestions = await db.feedbackRequest.findMany({
-    where: { status: { name: 'Suggestion' } },
+    where: {
+      status: { name: 'Suggestion' },
+      category:
+        category && typeof category === 'string'
+          ? { name: { equals: category, mode: 'insensitive' } }
+          : undefined,
+    },
     include: { category: true, _count: { select: { upvotes: true, comments: true } } },
     orderBy: { upvotes: { _count: 'desc' } },
   });
@@ -18,17 +29,7 @@ export default async function SuggestionsPage() {
   return (
     <>
       <TitleCard />
-      <div>
-        <VisuallyHidden>Categories</VisuallyHidden>
-        <ul>
-          <button type="button">All</button>
-          {categories.map((category) => (
-            <button key={category.id} type="button">
-              {category.name}
-            </button>
-          ))}
-        </ul>
-      </div>
+      <CategoryFilter categories={categories} />
       <div>
         <h2>Roadmap</h2>
         <Link href="/roadmap">View</Link>
@@ -42,7 +43,9 @@ export default async function SuggestionsPage() {
       </div>
       <div>
         <div>
-          <p>{statusesWithCount[0]._count.requests} Suggestions</p>
+          <p>
+            {suggestions.length} {suggestions.length === 1 ? 'Suggestion' : 'Suggestions'}
+          </p>
           <Link href="/feedback/new">Add Feedback</Link>
         </div>
         <div>
