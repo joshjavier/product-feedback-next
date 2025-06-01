@@ -1,0 +1,6 @@
+.container {
+  gap: rem(14px);
+  padding: rem(24px);
+  background-color: #fff;
+  border-radius: rem(10px);
+}

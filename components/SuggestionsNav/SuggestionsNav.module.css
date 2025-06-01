@@ -1,0 +1,32 @@
+.burger {
+  --burger-size: rem(20px);
+  --burger-line-size: rem(3px);
+
+  @media (min-width: $mantine-breakpoint-xs) {
+    --burger-size: rem(30px);
+    --burger-line-size: rem(4px);
+  }
+}
+
+.inner,
+.overlay {
+  top: rem(72px);
+
+  @media (min-width: $mantine-breakpoint-xs) {
+    top: rem(99px);
+  }
+}
+
+.content {
+  --drawer-size: 72.26vw;
+  max-width: rem(303px);
+  min-width: rem(271px);
+}
+
+.body {
+  padding: rem(24px);
+
+  & > * + * {
+    margin-top: rem(24px);
+  }
+}

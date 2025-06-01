@@ -1,0 +1,46 @@
+.card {
+  background: #a337f6;
+  background: radial-gradient(at top right, #e84d70 0%, #a337f6 53%, #28a7ed 100%);
+  color: #fff;
+  padding: rem(16px) rem(24px) rem(15px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  @media (min-width: $mantine-breakpoint-xs) {
+    padding-block: rem(24px);
+  }
+
+  @media (min-width: $mantine-breakpoint-sm) {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-end;
+  }
+}
+
+.text {
+  & > :first-child {
+    font-size: rem(15px);
+    font-weight: 700;
+    letter-spacing: -0.19px;
+    margin-block: 0;
+  }
+
+  & > :last-child {
+    font-size: rem(13px);
+    font-weight: 500;
+    opacity: 0.75;
+    margin-block: 0;
+  }
+
+  @media (min-width: $mantine-breakpoint-xs) {
+    & > :first-child {
+      font-size: rem(20px);
+      letter-spacing: -0.25px;
+    }
+
+    & > :last-child {
+      font-size: rem(15px);
+    }
+  }
+}

@@ -1,6 +1,6 @@
 'use client';
 
-import { createTheme } from '@mantine/core';
+import { Anchor, createTheme } from '@mantine/core';
 
 export const theme = createTheme({
   fontFamily: 'Jost, sans-serif, Apple Color Emoji, Segoe UI Emoji',
@@ -57,4 +57,7 @@ export const theme = createTheme({
   primaryShade: 6,
   primaryColor: 'grape',
   defaultRadius: 10,
+  components: {
+    Anchor: Anchor.extend({ defaultProps: { underline: 'always' } }),
+  },
 });

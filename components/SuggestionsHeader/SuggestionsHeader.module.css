@@ -1,0 +1,63 @@
+.container {
+  background-color: var(--mantine-color-neutral-9);
+  color: var(--mantine-color-neutral-1);
+  padding: rem(8px) rem(24px);
+  display: flex;
+  align-items: center;
+  gap: rem(38px);
+
+  @media (min-width: $mantine-breakpoint-xs) {
+    padding-block: rem(14px);
+    padding-inline-end: rem(12px);
+  }
+
+  @media (min-width: $mantine-breakpoint-sm) {
+    border-radius: rem(10px);
+  }
+
+  @media (min-width: $mantine-breakpoint-md) {
+    padding-inline-end: rem(16px);
+  }
+
+  /* Expand to the edges of the viewport on mobile */
+  @media (width < $mantine-breakpoint-sm) {
+    width: 100vw;
+    margin-inline-start: rem(-40px);
+  }
+
+  @media (width < $mantine-breakpoint-xs) {
+    margin-inline-start: rem(-24px);
+  }
+}
+
+.count {
+  font-weight: 700;
+  font-size: rem(18px);
+  letter-spacing: -0.25px;
+  margin-block: 0;
+  display: inline-flex;
+  gap: rem(16px);
+  align-items: center;
+}
+
+.button {
+  margin-inline-start: auto;
+  padding-block: rem(10.5px);
+  padding-inline: rem(16px) rem(17px);
+  font-weight: 700;
+  font-size: rem(13px);
+  color: var(--mantine-color-neutral-1);
+  height: unset;
+  line-height: normal;
+  border: none;
+
+  @mixin hover {
+    background-color: #c75af6;
+  }
+
+  @media (min-width: $mantine-breakpoint-xs) {
+    font-size: rem(14px);
+    padding-block: rem(12.5px) rem(11.5px);
+    padding-inline: rem(24px) rem(25px);
+  }
+}
