@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { CategoryFilter } from '@/components/CategoryFilter';
+import { Roadmap } from '@/components/Roadmap';
 import { TitleCard } from '@/components/TitleCard';
 import { getDb } from '@/lib/db';
 
@@ -30,17 +31,7 @@ export default async function SuggestionsPage({ searchParams }: SuggestionsPageP
     <>
       <TitleCard />
       <CategoryFilter categories={categories} />
-      <div>
-        <h2>Roadmap</h2>
-        <Link href="/roadmap">View</Link>
-        <ul>
-          {statusesWithCount.slice(1).map((item) => (
-            <li key={item.id}>
-              {item.name} - {item._count.requests}
-            </li>
-          ))}
-        </ul>
-      </div>
+      <Roadmap statusesWithCount={statusesWithCount.slice(1)} />
       <div>
         <div>
           <p>
