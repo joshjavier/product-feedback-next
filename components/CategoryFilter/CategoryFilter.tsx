@@ -14,16 +14,22 @@ export function CategoryFilter({ categories }: CategoryFilterProps) {
   const searchParams = useSearchParams();
 
   const createQueryString = useCallback(
-    (name: string, value: string) => {
+    (name: string, value: string | undefined) => {
       const params = new URLSearchParams(searchParams.toString());
-      params.set(name, value);
+      if (value) {
+        params.set(name, value);
+      } else {
+        params.delete(name);
+      }
       return params.toString();
     },
     [searchParams]
   );
 
+  const allQueryString = createQueryString('category', undefined);
+
   const options = [
-    { id: 0, name: 'All', href: '/' },
+    { id: 0, name: 'All', href: allQueryString ? `/?${allQueryString}` : '/' },
     ...categories.map((category) => ({
       ...category,
       href: `/?${createQueryString('category', category.name.toLowerCase().replace(/[^a-z]/g, ''))}`,
