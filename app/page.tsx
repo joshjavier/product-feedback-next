@@ -1,8 +1,10 @@
 import Link from 'next/link';
+import { Container } from '@mantine/core';
 import { CategoryFilter } from '@/components/CategoryFilter';
 import { Roadmap } from '@/components/Roadmap';
 import { TitleCard } from '@/components/TitleCard';
 import { getDb } from '@/lib/db';
+import classes from './page.module.css';
 
 interface SuggestionsPageProps {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
@@ -28,33 +30,37 @@ export default async function SuggestionsPage({ searchParams }: SuggestionsPageP
   });
 
   return (
-    <>
-      <TitleCard />
-      <CategoryFilter categories={categories} />
-      <Roadmap statusesWithCount={statusesWithCount.slice(1)} />
-      <div>
-        <div>
-          <p>
-            {suggestions.length} {suggestions.length === 1 ? 'Suggestion' : 'Suggestions'}
-          </p>
-          <Link href="/feedback/new">Add Feedback</Link>
+    <Container className={classes.container} size={1110}>
+      <div className={classes.layout}>
+        <div className={classes.aside}>
+          <TitleCard />
+          <CategoryFilter categories={categories} />
+          <Roadmap statusesWithCount={statusesWithCount.slice(1)} />
         </div>
         <div>
-          <ul>
-            {suggestions.map((suggestion) => (
-              <li key={suggestion.id}>
-                <p>
-                  <Link href={`/feedback/${suggestion.id}`}>{suggestion.title}</Link>
-                </p>
-                <p>{suggestion.description}</p>
-                <p>{suggestion.category.name}</p>
-                <p>{suggestion._count.upvotes}</p>
-                <p>{suggestion._count.comments}</p>
-              </li>
-            ))}
-          </ul>
+          <div>
+            <p>
+              {suggestions.length} {suggestions.length === 1 ? 'Suggestion' : 'Suggestions'}
+            </p>
+            <Link href="/feedback/new">Add Feedback</Link>
+          </div>
+          <div>
+            <ul>
+              {suggestions.map((suggestion) => (
+                <li key={suggestion.id}>
+                  <p>
+                    <Link href={`/feedback/${suggestion.id}`}>{suggestion.title}</Link>
+                  </p>
+                  <p>{suggestion.description}</p>
+                  <p>{suggestion.category.name}</p>
+                  <p>{suggestion._count.upvotes}</p>
+                  <p>{suggestion._count.comments}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
-    </>
+    </Container>
   );
 }

@@ -1,0 +1,51 @@
+.container {
+  box-sizing: content-box;
+  padding-inline: rem(24px);
+
+  @media (min-width: $mantine-breakpoint-xs) {
+    padding-inline: rem(40px);
+  }
+}
+
+.layout {
+  display: flex;
+  flex-direction: column;
+  row-gap: rem(40px);
+  column-gap: rem(30px);
+  padding-top: rem(56px);
+
+  @media (min-width: $mantine-breakpoint-md) {
+    flex-direction: row;
+    padding-top: rem(94px);
+  }
+}
+
+.aside {
+  display: flex;
+  row-gap: rem(24px);
+  column-gap: rem(10px);
+  flex-direction: column;
+
+  /* TABLET LAYOUT */
+  @media (min-width: $mantine-breakpoint-sm) and (width < $mantine-breakpoint-md) {
+    flex-direction: row;
+
+    & > * {
+      width: calc(100% / 3);
+    }
+  }
+
+  @media (min-width: $mantine-breakpoint-sm) {
+    & > :first-child {
+      border-radius: rem(10px);
+    }
+  }
+
+  @media (min-width: $mantine-breakpoint-md) {
+    max-width: rem(255px);
+
+    & > :first-child {
+      min-height: rem(137px);
+    }
+  }
+}

@@ -1,6 +1,7 @@
 .container {
   padding: rem(19px) rem(24px) rem(24px);
   background-color: #fff;
+  border-radius: rem(10px);
 }
 
 .title {
