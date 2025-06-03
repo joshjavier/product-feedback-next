@@ -1,7 +1,6 @@
 .toggle {
   --button-bg: transparent;
   --button-hover: transparent;
-  --button-color: var(--mantine-color-neutral-1);
   border: none;
   height: unset;
   font-weight: 400;
@@ -10,7 +9,9 @@
   border-radius: 0;
 
   @mixin hover {
-    opacity: 0.75;
+    & .label {
+      opacity: 0.75;
+    }
   }
 
   &[data-expanded] {
@@ -22,6 +23,10 @@
   &:active {
     transform: unset;
   }
+}
+
+.label {
+  color: var(--mantine-color-neutral-1);
 }
 
 .dropdown {

@@ -34,7 +34,7 @@ export function SortSelect() {
     >
       <Combobox.Target>
         <Button
-          className={classes.toggle}
+          classNames={{ root: classes.toggle, label: classes.label }}
           onClick={() => combobox.toggleDropdown()}
           rightSection={<IconArrowDown aria-hidden="true" />}
         >
