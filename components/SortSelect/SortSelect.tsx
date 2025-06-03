@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { Button, Combobox, useCombobox } from '@mantine/core';
 import IconArrowDown from '@/icons/icon-arrow-down.svg';
+import IconCheck from '@/icons/icon-check.svg';
 import classes from './SortSelect.module.css';
 
 export function SortSelect() {
@@ -14,8 +15,9 @@ export function SortSelect() {
 
   const options = ['Most Upvotes', 'Least Upvotes', 'Most Comments', 'Least Comments'].map(
     (item) => (
-      <Combobox.Option value={item} key={item}>
+      <Combobox.Option value={item} key={item} active={item === value}>
         {item}
+        {item === value && <IconCheck aria-hidden="true" />}
       </Combobox.Option>
     )
   );
