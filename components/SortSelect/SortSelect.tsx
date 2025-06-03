@@ -1,0 +1,49 @@
+'use client';
+
+import { useState } from 'react';
+import { Button, Combobox, useCombobox } from '@mantine/core';
+import IconArrowDown from '@/icons/icon-arrow-down.svg';
+import classes from './SortSelect.module.css';
+
+export function SortSelect() {
+  const combobox = useCombobox({
+    onDropdownClose: () => combobox.resetSelectedOption(),
+  });
+
+  const [value, setValue] = useState<string | null>('Most Upvotes');
+
+  const options = ['Most Upvotes', 'Least Upvotes', 'Most Comments', 'Least Comments'].map(
+    (item) => (
+      <Combobox.Option value={item} key={item}>
+        {item}
+      </Combobox.Option>
+    )
+  );
+
+  return (
+    <Combobox
+      store={combobox}
+      onOptionSubmit={(val) => {
+        setValue(val);
+        combobox.closeDropdown();
+      }}
+      classNames={{ dropdown: classes.dropdown, option: classes.option }}
+      offset={42}
+      position="bottom-start"
+      transitionProps={{ transition: 'fade-down' }}
+    >
+      <Combobox.Target>
+        <Button
+          className={classes.toggle}
+          onClick={() => combobox.toggleDropdown()}
+          rightSection={<IconArrowDown aria-hidden="true" />}
+        >
+          Sort by :&nbsp;<strong>{value}</strong>
+        </Button>
+      </Combobox.Target>
+      <Combobox.Dropdown>
+        <Combobox.Options>{options}</Combobox.Options>
+      </Combobox.Dropdown>
+    </Combobox>
+  );
+}

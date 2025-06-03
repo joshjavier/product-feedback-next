@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { Button } from '@mantine/core';
+import { SortSelect } from '../SortSelect';
 import IconSuggestions from './icon-suggestions.svg';
 import classes from './SuggestionsHeader.module.css';
 
@@ -16,6 +17,7 @@ export function SuggestionsHeader({ suggestionsCount }: SuggestionsHeaderProps) 
           {suggestionsCount} {suggestionsCount === 1 ? 'Suggestion' : 'Suggestions'}
         </span>
       </p>
+      <SortSelect />
       <Button component={Link} href="/feedback/new" className={classes.button}>
         <span aria-hidden>+&nbsp;</span>Add Feedback
       </Button>
