@@ -15,7 +15,12 @@ export function SortSelect() {
 
   const options = ['Most Upvotes', 'Least Upvotes', 'Most Comments', 'Least Comments'].map(
     (item) => (
-      <Combobox.Option value={item} key={item} active={item === value}>
+      <Combobox.Option
+        value={item}
+        key={item}
+        active={item === value}
+        aria-selected={item === value}
+      >
         {item}
         {item === value && <IconCheck aria-hidden="true" />}
       </Combobox.Option>
