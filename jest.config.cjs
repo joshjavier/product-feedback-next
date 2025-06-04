@@ -13,4 +13,19 @@ const customJestConfig = {
   testEnvironment: 'jest-environment-jsdom',
 };
 
-module.exports = createJestConfig(customJestConfig);
+const jestConfigWithOverrides = async (...args) => {
+  const configFn = createJestConfig(customJestConfig);
+  const nextJestConfig = await configFn(...args);
+
+  nextJestConfig.moduleNameMapper = {
+    // next/jest config has an existing rule that stubs images including SVGs
+    // so as a workaround, we put our SVG stub higher up on the mapping tree
+    // see https://github.com/vercel/next.js/discussions/58948 and https://github.com/vercel/next.js/discussions/42535
+    '\\.svg$': '<rootDir>/__mocks__/svg.js',
+    ...nextJestConfig.moduleNameMapper,
+  };
+
+  return nextJestConfig;
+};
+
+module.exports = jestConfigWithOverrides;
