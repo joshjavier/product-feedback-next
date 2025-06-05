@@ -11,7 +11,7 @@ interface SuggestionsHeaderProps {
 export function SuggestionsHeader({ suggestionsCount }: SuggestionsHeaderProps) {
   return (
     <div className={classes.container}>
-      <p className={classes.count}>
+      <p className={`${classes.count} mantine-visible-from-sm`}>
         <IconSuggestions aria-hidden="true" />
         <span>
           {suggestionsCount} {suggestionsCount === 1 ? 'Suggestion' : 'Suggestions'}

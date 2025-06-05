@@ -28,10 +28,6 @@
   display: inline-flex;
   gap: rem(16px);
   align-items: center;
-
-  @media (width < $mantine-breakpoint-sm) {
-    display: none;
-  }
 }
 
 .button {
