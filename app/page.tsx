@@ -1,9 +1,7 @@
 import Link from 'next/link';
 import { Container } from '@mantine/core';
-import { CategoryFilter } from '@/components/CategoryFilter';
-import { Roadmap } from '@/components/Roadmap';
 import { SuggestionsHeader } from '@/components/SuggestionsHeader';
-import { TitleCard } from '@/components/TitleCard';
+import { SuggestionsNav } from '@/components/SuggestionsNav';
 import { getDb } from '@/lib/db';
 import classes from './page.module.css';
 
@@ -34,9 +32,7 @@ export default async function SuggestionsPage({ searchParams }: SuggestionsPageP
     <Container className={classes.container} size={1110}>
       <div className={classes.layout}>
         <div className={classes.aside}>
-          <TitleCard />
-          <CategoryFilter categories={categories} />
-          <Roadmap statusesWithCount={statusesWithCount.slice(1)} />
+          <SuggestionsNav categories={categories} statusesWithCount={statusesWithCount.slice(1)} />
         </div>
         <div className={classes.main}>
           <SuggestionsHeader suggestionsCount={suggestions.length} />

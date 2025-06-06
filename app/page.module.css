@@ -18,6 +18,15 @@
     flex-direction: row;
     padding-top: rem(94px);
   }
+
+  /* MOBILE LAYOUT */
+  @media (width < $mantine-breakpoint-sm) {
+    padding-top: rem(99px);
+  }
+
+  @media (width < $mantine-breakpoint-xs) {
+    padding-top: rem(72px);
+  }
 }
 
 .aside {
@@ -47,6 +56,14 @@
     & > :first-child {
       min-height: rem(137px);
     }
+  }
+
+  /* MOBILE LAYOUT */
+  @media (width < $mantine-breakpoint-sm) {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
   }
 }
 

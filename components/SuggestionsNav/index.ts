@@ -1,0 +1,1 @@
+export { SuggestionsNav } from './SuggestionsNav';
