@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import classes from './SuggestionCard.module.css';
 
 interface SuggestionCardProps {
   suggestion: {
@@ -15,14 +16,18 @@ interface SuggestionCardProps {
 
 export function SuggestionCard({ suggestion }: SuggestionCardProps) {
   return (
-    <li key={suggestion.id}>
-      <p>
-        <Link href={`/feedback/${suggestion.id}`}>{suggestion.title}</Link>
-      </p>
-      <p>{suggestion.description}</p>
-      <p>{suggestion.category.name}</p>
-      <p>{suggestion._count.upvotes}</p>
-      <p>{suggestion._count.comments}</p>
+    <li key={suggestion.id} className={classes.card}>
+      <div className={classes.text}>
+        <h3 className={classes.title}>
+          <Link href={`/feedback/${suggestion.id}`}>{suggestion.title}</Link>
+        </h3>
+        <p className={classes.description}>{suggestion.description}</p>
+        <p className={classes.category}>{suggestion.category.name}</p>
+      </div>
+      <div className={classes.counts}>
+        <p>{suggestion._count.upvotes}</p>
+        <p>{suggestion._count.comments}</p>
+      </div>
     </li>
   );
 }

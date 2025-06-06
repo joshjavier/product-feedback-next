@@ -1,5 +1,5 @@
-import { Container } from '@mantine/core';
-import { SuggestionCard } from '@/components/SuggestionCard';
+import { Container, VisuallyHidden } from '@mantine/core';
+import { SuggestionsList } from '@/components/SuggestionCard';
 import { SuggestionsHeader } from '@/components/SuggestionsHeader';
 import { SuggestionsNav } from '@/components/SuggestionsNav';
 import { getDb } from '@/lib/db';
@@ -36,12 +36,9 @@ export default async function SuggestionsPage({ searchParams }: SuggestionsPageP
         </div>
         <div className={classes.main}>
           <SuggestionsHeader suggestionsCount={suggestions.length} />
-          <div>
-            <ul>
-              {suggestions.map((suggestion) => (
-                <SuggestionCard key={suggestion.id} suggestion={suggestion} />
-              ))}
-            </ul>
+          <div className={classes.suggestions}>
+            <VisuallyHidden component="h2">Suggestions</VisuallyHidden>
+            <SuggestionsList suggestions={suggestions} />
           </div>
         </div>
       </div>

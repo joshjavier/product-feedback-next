@@ -13,15 +13,18 @@
   row-gap: rem(40px);
   column-gap: rem(30px);
   padding-top: rem(56px);
+  padding-bottom: rem(113px);
 
   @media (min-width: $mantine-breakpoint-md) {
     flex-direction: row;
     padding-top: rem(94px);
+    padding-bottom: rem(129px);
   }
 
   /* MOBILE LAYOUT */
   @media (width < $mantine-breakpoint-sm) {
     padding-top: rem(99px);
+    padding-bottom: rem(55px);
   }
 
   @media (width < $mantine-breakpoint-xs) {
@@ -70,4 +73,12 @@
 
 .main {
   width: 100%;
+}
+
+.suggestions {
+  margin-top: rem(32px);
+
+  @media (min-width: $mantine-breakpoint-sm) {
+    margin-top: rem(24px);
+  }
 }
