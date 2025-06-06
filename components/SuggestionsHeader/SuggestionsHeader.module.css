@@ -18,6 +18,16 @@
   @media (min-width: $mantine-breakpoint-md) {
     padding-inline-end: rem(16px);
   }
+
+  /* Expand to the edges of the viewport on mobile */
+  @media (width < $mantine-breakpoint-sm) {
+    width: 100vw;
+    margin-inline-start: rem(-40px);
+  }
+
+  @media (width < $mantine-breakpoint-xs) {
+    margin-inline-start: rem(-24px);
+  }
 }
 
 .count {

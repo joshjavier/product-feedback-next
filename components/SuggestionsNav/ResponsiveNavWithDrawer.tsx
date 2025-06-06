@@ -2,7 +2,7 @@
 
 import { ReactNode } from 'react';
 import { Burger, Drawer } from '@mantine/core';
-import { useDisclosure, useViewportSize } from '@mantine/hooks';
+import { useDisclosure, useHeadroom, useViewportSize } from '@mantine/hooks';
 import { TitleCard } from '../TitleCard';
 import classes from './SuggestionsNav.module.css';
 
@@ -13,6 +13,7 @@ interface ResponsiveNavWithDrawerProps {
 export function ResponsiveNavWithDrawer({ children }: ResponsiveNavWithDrawerProps) {
   const [opened, { close, toggle }] = useDisclosure(false);
   const { width } = useViewportSize();
+  const pinned = useHeadroom({ fixedAt: 99 });
 
   return (
     <>
@@ -27,6 +28,10 @@ export function ResponsiveNavWithDrawer({ children }: ResponsiveNavWithDrawerPro
             className={classes.burger}
           />
         }
+        style={{
+          transform: `translate3d(0, ${width > 768 ? 0 : pinned ? 0 : '-110px'}, 0)`,
+          transition: 'transform 400ms ease',
+        }}
       />
       {width < 768 ? (
         <Drawer
