@@ -1,6 +1,13 @@
 import { render, screen, userEvent } from '@/test-utils';
 import { SortSelect } from './SortSelect';
 
+jest.mock('next/navigation', () => ({
+  useSearchParams: () => new URLSearchParams(),
+  useRouter: () => ({
+    replace: () => undefined,
+  }),
+}));
+
 describe('SortSelect component', () => {
   it('is initially set to sort by most upvotes', () => {
     render(<SortSelect />);

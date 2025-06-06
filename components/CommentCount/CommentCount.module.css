@@ -1,0 +1,28 @@
+.container {
+  display: inline-flex;
+  align-items: center;
+  gap: rem(4px);
+  margin-inline: 0;
+}
+
+.number {
+  display: inline-block;
+  min-width: rem(18px);
+  text-align: center;
+  font-weight: 700;
+  letter-spacing: -0.18px;
+
+  &[data-value='0'] {
+    opacity: 0.5;
+  }
+}
+
+@media (min-width: $mantine-breakpoint-xs) {
+  .container {
+    gap: rem(8px);
+  }
+
+  .number {
+    letter-spacing: -0.22px;
+  }
+}

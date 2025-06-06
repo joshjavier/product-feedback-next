@@ -1,6 +1,13 @@
 import { render, screen } from '@/test-utils';
 import { SuggestionsHeader } from './SuggestionsHeader';
 
+jest.mock('next/navigation', () => ({
+  useSearchParams: () => new URLSearchParams(),
+  useRouter: () => ({
+    replace: () => undefined,
+  }),
+}));
+
 describe('SuggestionsHeader component', () => {
   it('shows the number of suggestions displayed', () => {
     const { rerender } = render(<SuggestionsHeader suggestionsCount={0} />);

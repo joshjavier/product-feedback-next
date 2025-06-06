@@ -1,0 +1,49 @@
+.button {
+  height: max-content;
+  min-width: rem(69px);
+  background-color: var(--mantine-color-neutral-1);
+  color: var(--mantine-color-neutral-8);
+  --icon-color: var(--mantine-color-blue-4);
+  padding: rem(6px) rem(13px) rem(7px) rem(16px);
+  line-height: normal;
+  border: none;
+
+  --button-hover: #cfd7ff;
+  --button-hover-color: var(--mantine-color-neutral-8);
+
+  &[aria-pressed='true'] {
+    background-color: var(--mantine-color-blue-4);
+    color: #fff;
+    --icon-color: #fff;
+  }
+
+  @media (min-width: $mantine-breakpoint-xs) {
+    &:where(:not([data-orientation='horizontal'])) {
+      min-width: unset;
+      padding: rem(11px) rem(9px) rem(8px);
+
+      & .inner {
+        flex-direction: column;
+      }
+    }
+  }
+
+  & [data-position='left'] {
+    margin: 0;
+  }
+}
+
+.icon {
+  color: var(--icon-color);
+}
+
+.inner {
+  gap: rem(8px);
+}
+
+.label {
+  font-size: rem(13px);
+  letter-spacing: -0.18px;
+  min-width: rem(22px);
+  justify-content: center;
+}

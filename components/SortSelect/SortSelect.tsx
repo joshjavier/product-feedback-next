@@ -1,17 +1,29 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { Button, Combobox, useCombobox } from '@mantine/core';
+import { useSearchParamsForNavigation } from '@/hooks';
 import IconArrowDown from '@/icons/icon-arrow-down.svg';
 import IconCheck from '@/icons/icon-check.svg';
 import classes from './SortSelect.module.css';
 
+const sortMapping: Record<string, string> = {
+  lu: 'Least Upvotes',
+  mc: 'Most Comments',
+  lc: 'Least Comments',
+};
+
 export function SortSelect() {
+  const router = useRouter();
+  const [searchParams, createQueryString] = useSearchParamsForNavigation();
   const combobox = useCombobox({
     onDropdownClose: () => combobox.resetSelectedOption(),
   });
 
-  const [value, setValue] = useState<string | null>('Most Upvotes');
+  const [value, setValue] = useState<string | null>(
+    sortMapping[searchParams.get('sort') as string] ?? 'Most Upvotes'
+  );
 
   const options = ['Most Upvotes', 'Least Upvotes', 'Most Comments', 'Least Comments'].map(
     (item) => (
@@ -33,6 +45,16 @@ export function SortSelect() {
       onOptionSubmit={(val) => {
         setValue(val);
         combobox.closeDropdown();
+
+        let sort;
+        if (val === 'Least Upvotes') {
+          sort = 'lu';
+        } else if (val === 'Most Comments') {
+          sort = 'mc';
+        } else if (val === 'Least Comments') {
+          sort = 'lc';
+        }
+        router.replace(`/?${createQueryString('sort', sort)}`);
       }}
       classNames={{ dropdown: classes.dropdown, option: classes.option }}
       offset={42}

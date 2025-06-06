@@ -1,5 +1,5 @@
-import Link from 'next/link';
-import { Container } from '@mantine/core';
+import { Container, VisuallyHidden } from '@mantine/core';
+import { SuggestionsList } from '@/components/SuggestionCard';
 import { SuggestionsHeader } from '@/components/SuggestionsHeader';
 import { SuggestionsNav } from '@/components/SuggestionsNav';
 import { getDb } from '@/lib/db';
@@ -10,12 +10,26 @@ interface SuggestionsPageProps {
 }
 
 export default async function SuggestionsPage({ searchParams }: SuggestionsPageProps) {
-  const { category } = await searchParams;
+  const { category, sort } = await searchParams;
   const db = getDb();
   const categories = await db.category.findMany();
   const statusesWithCount = await db.status.findMany({
     include: { _count: { select: { requests: true } } },
   });
+
+  const orderBy = {} as any;
+  if (sort && typeof sort === 'string') {
+    if (sort === 'lu') {
+      orderBy.upvotes = { _count: 'asc' };
+    } else if (sort === 'mc') {
+      orderBy.comments = { _count: 'desc' };
+    } else if (sort === 'lc') {
+      orderBy.comments = { _count: 'asc' };
+    }
+  } else {
+    orderBy.upvotes = { _count: 'desc' };
+  }
+
   const suggestions = await db.feedbackRequest.findMany({
     where: {
       status: { name: 'Suggestion' },
@@ -25,7 +39,7 @@ export default async function SuggestionsPage({ searchParams }: SuggestionsPageP
           : undefined,
     },
     include: { category: true, _count: { select: { upvotes: true, comments: true } } },
-    orderBy: { upvotes: { _count: 'desc' } },
+    orderBy,
   });
 
   return (
@@ -36,20 +50,9 @@ export default async function SuggestionsPage({ searchParams }: SuggestionsPageP
         </div>
         <div className={classes.main}>
           <SuggestionsHeader suggestionsCount={suggestions.length} />
-          <div>
-            <ul>
-              {suggestions.map((suggestion) => (
-                <li key={suggestion.id}>
-                  <p>
-                    <Link href={`/feedback/${suggestion.id}`}>{suggestion.title}</Link>
-                  </p>
-                  <p>{suggestion.description}</p>
-                  <p>{suggestion.category.name}</p>
-                  <p>{suggestion._count.upvotes}</p>
-                  <p>{suggestion._count.comments}</p>
-                </li>
-              ))}
-            </ul>
+          <div className={classes.suggestions}>
+            <VisuallyHidden component="h2">Suggestions</VisuallyHidden>
+            <SuggestionsList suggestions={suggestions} />
           </div>
         </div>
       </div>
