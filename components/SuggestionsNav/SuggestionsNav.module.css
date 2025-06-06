@@ -1,0 +1,8 @@
+.inner,
+.overlay {
+  top: rem(72px);
+
+  @media (min-width: $mantine-breakpoint-xs) {
+    top: rem(99px);
+  }
+}
