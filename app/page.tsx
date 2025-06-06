@@ -1,5 +1,5 @@
-import Link from 'next/link';
 import { Container } from '@mantine/core';
+import { SuggestionCard } from '@/components/SuggestionCard';
 import { SuggestionsHeader } from '@/components/SuggestionsHeader';
 import { SuggestionsNav } from '@/components/SuggestionsNav';
 import { getDb } from '@/lib/db';
@@ -39,15 +39,7 @@ export default async function SuggestionsPage({ searchParams }: SuggestionsPageP
           <div>
             <ul>
               {suggestions.map((suggestion) => (
-                <li key={suggestion.id}>
-                  <p>
-                    <Link href={`/feedback/${suggestion.id}`}>{suggestion.title}</Link>
-                  </p>
-                  <p>{suggestion.description}</p>
-                  <p>{suggestion.category.name}</p>
-                  <p>{suggestion._count.upvotes}</p>
-                  <p>{suggestion._count.comments}</p>
-                </li>
+                <SuggestionCard key={suggestion.id} suggestion={suggestion} />
               ))}
             </ul>
           </div>
