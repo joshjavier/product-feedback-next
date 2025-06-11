@@ -10,7 +10,6 @@
   min-width: rem(18px);
   text-align: center;
   font-weight: 700;
-  font-size: rem(13px);
   letter-spacing: -0.18px;
 
   &[data-value='0'] {
@@ -24,7 +23,6 @@
   }
 
   .number {
-    font-size: rem(16px);
     letter-spacing: -0.22px;
   }
 }

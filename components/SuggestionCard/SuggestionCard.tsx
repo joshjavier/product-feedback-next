@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { CommentCount } from '../CommentCount';
+import { UpvoteButton } from '../UpvoteButton';
 import classes from './SuggestionCard.module.css';
 
 interface SuggestionCardProps {
@@ -26,7 +27,7 @@ export function SuggestionCard({ suggestion }: SuggestionCardProps) {
         <p className={classes.category}>{suggestion.category.name}</p>
       </div>
       <div className={classes.counts}>
-        <p>{suggestion._count.upvotes}</p>
+        <UpvoteButton upvotes={suggestion._count.upvotes} />
         <CommentCount value={suggestion._count.comments} />
       </div>
     </li>
