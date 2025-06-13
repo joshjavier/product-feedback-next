@@ -1,9 +1,11 @@
+import { forwardRef } from 'react';
 import Link from 'next/link';
+import { Box, BoxProps, createPolymorphicComponent, Title } from '@mantine/core';
 import { CommentCount } from '../CommentCount';
 import { UpvoteButton } from '../UpvoteButton';
 import classes from './SuggestionCard.module.css';
 
-interface SuggestionCardProps {
+interface SuggestionCardProps extends BoxProps {
   suggestion: {
     id: number;
     title: string;
@@ -17,24 +19,26 @@ interface SuggestionCardProps {
   withLink?: boolean;
 }
 
-export function SuggestionCard({ suggestion, withLink }: SuggestionCardProps) {
-  return (
-    <li key={suggestion.id} className={classes.card}>
-      <div className={classes.text}>
-        <h3 className={classes.title}>
-          {withLink ? (
-            <Link href={`/feedback/${suggestion.id}`}>{suggestion.title}</Link>
-          ) : (
-            suggestion.title
-          )}
-        </h3>
-        <p className={classes.description}>{suggestion.description}</p>
-        <p className={classes.category}>{suggestion.category.name}</p>
-      </div>
-      <div className={classes.counts}>
-        <UpvoteButton upvotes={suggestion._count.upvotes} />
-        <CommentCount value={suggestion._count.comments} />
-      </div>
-    </li>
-  );
-}
+export const SuggestionCard = createPolymorphicComponent<'div', SuggestionCardProps>(
+  forwardRef<HTMLDivElement, SuggestionCardProps>(({ suggestion, withLink, ...others }, ref) => {
+    return (
+      <Box component="div" key={suggestion.id} className={classes.card} {...others} ref={ref}>
+        <div className={classes.text}>
+          <Title order={withLink ? 3 : 1} className={classes.title}>
+            {withLink ? (
+              <Link href={`/feedback/${suggestion.id}`}>{suggestion.title}</Link>
+            ) : (
+              suggestion.title
+            )}
+          </Title>
+          <p className={classes.description}>{suggestion.description}</p>
+          <p className={classes.category}>{suggestion.category.name}</p>
+        </div>
+        <div className={classes.counts}>
+          <UpvoteButton upvotes={suggestion._count.upvotes} />
+          <CommentCount value={suggestion._count.comments} />
+        </div>
+      </Box>
+    );
+  })
+);

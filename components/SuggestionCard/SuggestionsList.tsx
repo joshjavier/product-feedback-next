@@ -23,7 +23,7 @@ export function SuggestionsList({ suggestions }: SuggestionsListProps) {
   return (
     <ul className={classes.list}>
       {suggestions.map((suggestion) => (
-        <SuggestionCard key={suggestion.id} suggestion={suggestion} withLink />
+        <SuggestionCard key={suggestion.id} suggestion={suggestion} component="li" withLink />
       ))}
     </ul>
   );

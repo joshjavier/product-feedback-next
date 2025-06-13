@@ -1,6 +1,12 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import { Box, Button, Container } from '@mantine/core';
+import { AddCommentForm } from '@/components/AddCommentForm';
+import { BackButton } from '@/components/BackButton';
+import { FeedbackComments } from '@/components/FeedbackComments';
+import { SuggestionCard } from '@/components/SuggestionCard';
 import { getDb } from '@/lib/db';
+import classes from './page.module.css';
 
 export default async function FeedbackDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -28,49 +34,25 @@ export default async function FeedbackDetailPage({ params }: { params: Promise<{
   });
 
   return (
-    <>
-      <div>
-        <Link href="/">Go Back</Link>
-        <Link href={`/feedback/${feedback.id}/edit`}>Edit Feedback</Link>
+    <Container size={730} className={classes.container}>
+      <div className={classes.layout}>
+        <div className={classes.header}>
+          <BackButton />
+          <Button
+            component={Link}
+            href={`/feedback/${feedback.id}/edit`}
+            className={classes.editBtn}
+            color="blue"
+          >
+            Edit Feedback
+          </Button>
+        </div>
+        <Box component="article" display="contents">
+          <SuggestionCard suggestion={feedback} />
+          <FeedbackComments count={feedback._count.comments} comments={comments} />
+        </Box>
+        <AddCommentForm />
       </div>
-      <div>
-        <p>{feedback.title}</p>
-        <p>{feedback.description}</p>
-        <p>{feedback.category.name}</p>
-        <p>{feedback._count.upvotes}</p>
-        <p>{feedback._count.comments}</p>
-      </div>
-      <div>
-        <h2>{feedback._count.comments} Comments</h2>
-        <ul>
-          {comments.map((comment) => (
-            <li key={comment.id}>
-              <p>{comment.author.name}</p>
-              <p>@{comment.author.username}</p>
-              <p>{comment.content}</p>
-              {comment.replies.length > 0 && (
-                <ul>
-                  {comment.replies.map((reply) => (
-                    <li key={reply.id}>
-                      <p>{reply.author.name}</p>
-                      <p>@{reply.author.username}</p>
-                      <p>
-                        @{reply.replyToUser?.username} {reply.content}
-                      </p>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </li>
-          ))}
-        </ul>
-      </div>
-      <div>
-        <h2>Add Comment</h2>
-        <textarea name="comment" id="comment" />
-        <p>250 characters left</p>
-        <button type="submit">Post Comment</button>
-      </div>
-    </>
+    </Container>
   );
 }

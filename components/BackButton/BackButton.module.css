@@ -1,0 +1,10 @@
+.link {
+  color: var(--mantine-color-neutral-6);
+  font-weight: 700;
+  font-size: inherit;
+  line-height: normal;
+
+  & svg {
+    margin-inline-end: rem(16px);
+  }
+}

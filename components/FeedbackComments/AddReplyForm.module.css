@@ -1,0 +1,56 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: rem(16px);
+
+  @media (min-width: $mantine-breakpoint-xs) {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+}
+
+.root {
+  width: 100%;
+}
+
+.input {
+  margin-block: 0;
+  border-radius: rem(5px);
+  background-color: var(--mantine-color-neutral-0);
+  min-height: rem(80px);
+  padding: rem(16px);
+  font-size: inherit;
+  line-height: normal;
+  --input-placeholder-color: #8c92b3;
+  --input-bd-focus: var(--mantine-color-blue-4);
+
+  @media (min-width: $mantine-breakpoint-xs) {
+    padding-inline: rem(24px);
+  }
+}
+
+.button {
+  flex-shrink: 0;
+  font-weight: 700;
+  line-height: normal;
+  font-size: inherit;
+  height: unset;
+  padding: rem(10.5px) rem(16px);
+  border: none;
+  --button-hover: #c75af6;
+
+  &:not(:disabled) {
+    color: var(--mantine-color-neutral-1);
+
+    @mixin hover {
+      color: var(--mantine-color-neutral-1);
+    }
+  }
+
+  @media (min-width: $mantine-breakpoint-xs) {
+    font-size: rem(14px);
+    padding-inline: rem(24px);
+    padding-block: rem(12.5px) rem(11.5px);
+  }
+}

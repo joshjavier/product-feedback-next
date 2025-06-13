@@ -1,0 +1,30 @@
+.container {
+  border-radius: rem(10px);
+  background-color: #fff;
+  padding: rem(24px);
+
+  @media (min-width: $mantine-breakpoint-xs) {
+    padding-inline: rem(32px);
+    padding-bottom: rem(40px);
+  }
+
+  @media (min-width: $mantine-breakpoint-md) {
+    padding-bottom: rem(48px);
+  }
+}
+
+.title {
+  margin-block: 0 rem(24px);
+  font-size: rem(18px);
+  letter-spacing: -0.25px;
+}
+
+.divider {
+  --divider-color: #8c92b3;
+  margin-block: rem(24px);
+  opacity: 0.25;
+
+  @media (min-width: $mantine-breakpoint-xs) {
+    margin-block: rem(32px);
+  }
+}
