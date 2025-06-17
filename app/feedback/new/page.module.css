@@ -1,0 +1,11 @@
+.container {
+  box-sizing: content-box;
+  font-size: rem(13px);
+}
+
+.layout {
+  display: flex;
+  flex-direction: column;
+  gap: rem(35px);
+  padding-block: rem(34px) rem(77px);
+}

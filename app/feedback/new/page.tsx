@@ -1,6 +1,8 @@
-import Link from 'next/link';
-import { Group, Select, Textarea, TextInput } from '@mantine/core';
+import { Container } from '@mantine/core';
+import { BackButton } from '@/components/BackButton';
+import { NewFeedbackForm } from '@/components/NewFeedbackForm';
 import { getDb } from '@/lib/db';
+import classes from './page.module.css';
 
 export default async function NewFeedbackPage() {
   const db = getDb();
@@ -8,32 +10,11 @@ export default async function NewFeedbackPage() {
   const options = categories.map((c) => c.name);
 
   return (
-    <>
-      <div>
-        <Link href="/">Go Back</Link>
+    <Container size={540} className={classes.container}>
+      <div className={classes.layout}>
+        <BackButton />
+        <NewFeedbackForm categories={options} />
       </div>
-      <div>
-        <form>
-          <h1>Create New Feedback</h1>
-          <TextInput label="Feedback Title" description="Add a short, descriptive headline" />
-          <Select
-            label="Category"
-            description="Choose a category for your feedback"
-            data={options}
-            defaultValue={options[0]}
-            checkIconPosition="right"
-            allowDeselect={false}
-          />
-          <Textarea
-            label="Feedback Detail"
-            description="Include any specific comments on what should be improved, added, etc."
-          />
-          <Group justify="flex-end">
-            <button type="button">Cancel</button>
-            <button type="submit">Add Feedback</button>
-          </Group>
-        </form>
-      </div>
-    </>
+    </Container>
   );
 }
