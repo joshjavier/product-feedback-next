@@ -1,6 +1,7 @@
 'use client';
 
-import { Anchor, createTheme } from '@mantine/core';
+import { Anchor, Button, createTheme } from '@mantine/core';
+import buttonClasses from '@/styles/Button.module.css';
 
 export const theme = createTheme({
   fontFamily: 'Jost, sans-serif, Apple Color Emoji, Segoe UI Emoji',
@@ -59,5 +60,6 @@ export const theme = createTheme({
   defaultRadius: 10,
   components: {
     Anchor: Anchor.extend({ defaultProps: { underline: 'always' } }),
+    Button: Button.extend({ classNames: buttonClasses }),
   },
 });

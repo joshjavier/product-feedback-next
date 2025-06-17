@@ -1,0 +1,24 @@
+.root {
+  &[data-variant='primary'] {
+    @mixin button;
+    --button-hover: #c75af6;
+  }
+
+  &[data-variant='secondary'] {
+    @mixin button;
+    --button-bg: var(--mantine-color-blue-4);
+    --button-hover: #7c91f9;
+  }
+
+  &[data-variant='neutral'] {
+    @mixin button;
+    --button-bg: var(--mantine-color-neutral-8);
+    --button-hover: #656ea3;
+  }
+
+  &[data-variant='danger'] {
+    @mixin button;
+    --button-bg: #d73737;
+    --button-hover: #e98888;
+  }
+}

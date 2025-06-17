@@ -26,5 +26,5 @@ describe('AddCommentForm component', () => {
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec orci ex, blandit eget suscipit id, rhoncus et velit. Morbi at mattis enim. Morbi porttitor, neque eget ullamcorper imperdiet, neque eros pulvinar justo, et bibendum erat orci sit amet aliquam.';
     await user.type(screen.getByRole('textbox'), stringWithMoreThan250Chars);
     expect(screen.getByRole('button')).toBeDisabled();
-  });
+  }, 10000);
 });

@@ -36,7 +36,7 @@ export function AddCommentForm({ charLimit = 250 }: AddCommentFormProps) {
         error={isInvalid}
         autosize
       />
-      <Button type="submit" className={classes.button} disabled={isInvalid}>
+      <Button type="submit" className={classes.button} disabled={isInvalid} variant="primary">
         Post Comment
       </Button>
     </form>

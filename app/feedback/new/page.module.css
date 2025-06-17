@@ -1,33 +1,29 @@
 .container {
   box-sizing: content-box;
   padding-inline: rem(24px);
+  font-size: rem(13px);
 
   @media (min-width: $mantine-breakpoint-xs) {
-    padding-inline: rem(40px);
+    font-size: rem(14px);
   }
 }
 
 .layout {
-  padding-top: rem(24px);
-  padding-bottom: rem(88px);
   display: flex;
   flex-direction: column;
-  gap: rem(24px);
+  gap: rem(35px);
+  padding-block: rem(34px) rem(77px);
+
+  & > :first-child {
+    align-self: flex-start;
+  }
 
   @media (min-width: $mantine-breakpoint-xs) {
     padding-top: rem(56px);
-    padding-bottom: rem(120px);
+    gap: rem(40px);
   }
 
   @media (min-width: $mantine-breakpoint-md) {
-    padding-top: rem(80px);
-    padding-bottom: rem(137px);
+    padding-block: rem(92px) rem(187px);
   }
-}
-
-.header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-size: rem(13px);
 }

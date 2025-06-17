@@ -1,0 +1,54 @@
+.container {
+  border-radius: rem(10px);
+  background-color: #fff;
+  padding-block: rem(44px) rem(24px);
+  padding-inline: rem(24px);
+  position: relative;
+  --icon-size: rem(40px);
+  margin-top: calc(var(--icon-size) / 2);
+}
+
+.icon {
+  width: var(--icon-size);
+  height: var(--icon-size);
+  position: absolute;
+  top: 0;
+  transform: translateY(-50%);
+}
+
+.title {
+  font-size: rem(18px);
+  letter-spacing: -0.25px;
+  margin-block: 0;
+}
+
+.fields {
+  margin-block: rem(24px) rem(40px);
+}
+
+.actions {
+  display: flex;
+  gap: rem(16px);
+  flex-direction: column;
+}
+
+@media (min-width: $mantine-breakpoint-xs) {
+  .container {
+    --icon-size: rem(56px);
+    padding-block: rem(52px) rem(40px);
+    padding-inline: rem(42px);
+  }
+
+  .title {
+    font-size: rem(24px);
+    letter-spacing: -0.33px;
+  }
+
+  .fields {
+    margin-block: rem(40px) rem(32px);
+  }
+
+  .actions {
+    flex-direction: row-reverse;
+  }
+}
