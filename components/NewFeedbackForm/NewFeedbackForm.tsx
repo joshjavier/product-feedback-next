@@ -1,4 +1,4 @@
-import { Group, Select, Textarea, TextInput } from '@mantine/core';
+import { Group, Select, Stack, Textarea, TextInput } from '@mantine/core';
 import IconNewFeedback from '@/icons/icon-new-feedback.svg';
 import classes from './NewFeedbackForm.module.css';
 
@@ -13,19 +13,21 @@ export function NewFeedbackForm({ categories }: NewFeedbackFormProps) {
       <h1 id="form-label" className={classes.title}>
         Create New Feedback
       </h1>
-      <TextInput label="Feedback Title" description="Add a short, descriptive headline" />
-      <Select
-        label="Category"
-        description="Choose a category for your feedback"
-        data={categories}
-        defaultValue={categories[0]}
-        checkIconPosition="right"
-        allowDeselect={false}
-      />
-      <Textarea
-        label="Feedback Detail"
-        description="Include any specific comments on what should be improved, added, etc."
-      />
+      <Stack gap={24}>
+        <TextInput label="Feedback Title" description="Add a short, descriptive headline" />
+        <Select
+          label="Category"
+          description="Choose a category for your feedback"
+          data={categories}
+          defaultValue={categories[0]}
+          checkIconPosition="right"
+          allowDeselect={false}
+        />
+        <Textarea
+          label="Feedback Detail"
+          description="Include any specific comments on what should be improved, added, etc."
+        />
+      </Stack>
       <Group justify="flex-end">
         <button type="button">Cancel</button>
         <button type="submit">Add Feedback</button>

@@ -8,4 +8,13 @@
   flex-direction: column;
   gap: rem(35px);
   padding-block: rem(34px) rem(77px);
+
+  @media (min-width: $mantine-breakpoint-xs) {
+    padding-top: rem(56px);
+    gap: rem(40px);
+  }
+
+  @media (min-width: $mantine-breakpoint-md) {
+    padding-block: rem(92px) rem(187px);
+  }
 }

@@ -15,3 +15,22 @@
   top: 0;
   transform: translateY(-50%);
 }
+
+.title {
+  font-size: rem(18px);
+  letter-spacing: -0.25px;
+  margin-block: 0;
+}
+
+@media (min-width: $mantine-breakpoint-xs) {
+  .container {
+    --icon-size: rem(56px);
+    padding-block: rem(52px) rem(40px);
+    padding-inline: rem(42px);
+  }
+
+  .title {
+    font-size: rem(24px);
+    letter-spacing: -0.33px;
+  }
+}
