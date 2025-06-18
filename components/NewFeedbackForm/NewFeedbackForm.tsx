@@ -13,19 +13,44 @@ export function NewFeedbackForm({ categories }: NewFeedbackFormProps) {
       <h1 id="form-label" className={classes.title}>
         Create New Feedback
       </h1>
-      <Stack gap={24}>
-        <TextInput label="Feedback Title" description="Add a short, descriptive headline" />
+      <Stack gap={24} className={classes.controls}>
+        <TextInput
+          variant="filled"
+          label="Feedback Title"
+          description="Add a short, descriptive headline"
+          classNames={{
+            label: classes.label,
+            description: classes.description,
+            wrapper: classes.inputWrapper,
+            input: classes.input,
+          }}
+        />
         <Select
+          variant="filled"
           label="Category"
           description="Choose a category for your feedback"
           data={categories}
           defaultValue={categories[0]}
           checkIconPosition="right"
           allowDeselect={false}
+          classNames={{
+            label: classes.label,
+            description: classes.description,
+            wrapper: classes.inputWrapper,
+            input: classes.input,
+          }}
         />
         <Textarea
+          variant="filled"
+          autosize
           label="Feedback Detail"
           description="Include any specific comments on what should be improved, added, etc."
+          classNames={{
+            label: classes.label,
+            description: classes.description,
+            wrapper: classes.inputWrapper,
+            input: classes.input,
+          }}
         />
       </Stack>
       <Group justify="flex-end">
