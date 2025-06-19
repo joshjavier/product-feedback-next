@@ -1,5 +1,6 @@
-import { Button, Select, Stack, Textarea, TextInput } from '@mantine/core';
+import { Button, Stack, Textarea, TextInput } from '@mantine/core';
 import IconNewFeedback from '@/icons/icon-new-feedback.svg';
+import { FormSelect } from './FormSelect';
 import classes from './NewFeedbackForm.module.css';
 
 interface NewFeedbackFormProps {
@@ -25,21 +26,7 @@ export function NewFeedbackForm({ categories }: NewFeedbackFormProps) {
             input: classes.input,
           }}
         />
-        <Select
-          variant="filled"
-          label="Category"
-          description="Choose a category for your feedback"
-          data={categories}
-          defaultValue={categories[0]}
-          checkIconPosition="right"
-          allowDeselect={false}
-          classNames={{
-            label: classes.label,
-            description: classes.description,
-            wrapper: classes.inputWrapper,
-            input: classes.input,
-          }}
-        />
+        <FormSelect options={categories} />
         <Textarea
           variant="filled"
           autosize
