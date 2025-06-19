@@ -64,6 +64,12 @@
   }
 }
 
+.actions {
+  display: flex;
+  gap: rem(16px);
+  flex-direction: column;
+}
+
 @media (min-width: $mantine-breakpoint-xs) {
   .container {
     --icon-size: rem(56px);
@@ -95,5 +101,9 @@
     &:where(textarea) {
       --input-height: rem(96px);
     }
+  }
+
+  .actions {
+    flex-direction: row-reverse;
   }
 }

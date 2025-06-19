@@ -1,4 +1,4 @@
-import { Group, Select, Stack, Textarea, TextInput } from '@mantine/core';
+import { Button, Select, Stack, Textarea, TextInput } from '@mantine/core';
 import IconNewFeedback from '@/icons/icon-new-feedback.svg';
 import classes from './NewFeedbackForm.module.css';
 
@@ -53,10 +53,14 @@ export function NewFeedbackForm({ categories }: NewFeedbackFormProps) {
           }}
         />
       </Stack>
-      <Group justify="flex-end">
-        <button type="button">Cancel</button>
-        <button type="submit">Add Feedback</button>
-      </Group>
+      <div className={classes.actions}>
+        <Button type="submit" variant="primary">
+          Add Feedback
+        </Button>
+        <Button type="button" variant="neutral">
+          Cancel
+        </Button>
+      </div>
     </form>
   );
 }
