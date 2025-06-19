@@ -1,0 +1,12 @@
+.root {
+  &[data-variant='primary'] {
+    @mixin button;
+    --button-hover: #c75af6;
+  }
+
+  &[data-variant='secondary'] {
+    @mixin button;
+    --button-bg: var(--mantine-color-blue-4);
+    --button-hover: #7c91f9;
+  }
+}

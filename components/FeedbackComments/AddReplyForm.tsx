@@ -29,7 +29,7 @@ export function AddReplyForm({ charLimit = 250 }: AddReplyFormProps) {
         error={isInvalid ? charLeft : null}
         classNames={{ root: classes.root, input: classes.input }}
       />
-      <Button type="submit" disabled={isInvalid} className={classes.button}>
+      <Button type="submit" disabled={isInvalid} className={classes.button} variant="primary">
         Post Reply
       </Button>
     </form>

@@ -38,12 +38,7 @@ export default async function FeedbackDetailPage({ params }: { params: Promise<{
       <div className={classes.layout}>
         <div className={classes.header}>
           <BackButton />
-          <Button
-            component={Link}
-            href={`/feedback/${feedback.id}/edit`}
-            className={classes.editBtn}
-            color="blue"
-          >
+          <Button component={Link} href={`/feedback/${feedback.id}/edit`} variant="secondary">
             Edit Feedback
           </Button>
         </div>

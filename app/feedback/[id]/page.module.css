@@ -30,28 +30,4 @@
   align-items: center;
   justify-content: space-between;
   font-size: rem(13px);
-
-  & .editBtn {
-    line-height: normal;
-    height: unset;
-    border: none;
-    padding: rem(10.5px) rem(16px);
-    font-weight: 700;
-    font-size: inherit;
-    color: var(--mantine-color-neutral-1);
-    background-color: var(--mantine-color-blue-4);
-
-    @mixin hover {
-      background-color: #7c91f9;
-    }
-  }
-
-  @media (min-width: $mantine-breakpoint-xs) {
-    font-size: rem(14px);
-
-    & .editBtn {
-      padding-block: rem(12.5px) rem(11.5px);
-      padding-inline: rem(24px) rem(25px);
-    }
-  }
 }
