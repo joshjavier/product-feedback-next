@@ -44,6 +44,8 @@
 
 .inputWrapper {
   margin-top: rem(16px);
+  --input-section-color: var(--mantine-color-blue-4);
+  --px: rem(16px);
 }
 
 .input {
@@ -51,16 +53,65 @@
   background-color: var(--mantine-color-neutral-0);
   line-height: normal;
   font-size: inherit;
-  padding-inline: rem(16px);
+  padding-inline: var(--px);
   --input-bd-focus: var(--mantine-color-blue-4);
 
-  &:where(input) {
+  &:where(input, button) {
     --input-height: rem(48px);
   }
 
   &:where(textarea) {
     --input-height: rem(120px);
     padding-block: rem(16px);
+  }
+
+  & + [data-position='right'] {
+    width: auto;
+    padding-inline: var(--px);
+  }
+
+  &[data-expanded] + [data-position='right'] > * {
+    rotate: 180deg;
+  }
+}
+
+.dropdown {
+  box-shadow: 0 10px 40px -7px alpha(var(--mantine-color-neutral-9), 0.35);
+  border: none;
+  padding: 0;
+}
+
+.option {
+  padding: rem(12px) rem(24px);
+  font-size: rem(16px);
+  color: var(--mantine-color-neutral-6);
+  border-radius: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  &:first-child {
+    border-top-left-radius: rem(10px);
+    border-top-right-radius: rem(10px);
+  }
+
+  &:last-child {
+    border-bottom-left-radius: rem(10px);
+    border-bottom-right-radius: rem(10px);
+  }
+
+  @mixin hover {
+    background-color: unset;
+    color: var(--mantine-color-grape-6);
+  }
+
+  &[data-combobox-selected] {
+    background-color: var(--mantine-color-neutral-1);
+    color: var(--mantine-color-grape-6);
+  }
+
+  & + & {
+    border-top: 1px solid alpha(var(--mantine-color-neutral-8), 0.15);
   }
 }
 
@@ -94,9 +145,12 @@
     margin-top: rem(2px);
   }
 
+  .inputWrapper {
+    --px: rem(24px);
+  }
+
   .input {
     font-size: rem(15px);
-    padding-inline: rem(24px);
 
     &:where(textarea) {
       --input-height: rem(96px);

@@ -10,7 +10,7 @@ interface NewFeedbackFormProps {
 export function NewFeedbackForm({ categories }: NewFeedbackFormProps) {
   return (
     <form aria-labelledby="form-label" className={classes.container}>
-      <IconNewFeedback className={classes.icon} />
+      <IconNewFeedback className={classes.icon} aria-hidden="true" />
       <h1 id="form-label" className={classes.title}>
         Create New Feedback
       </h1>
@@ -26,7 +26,11 @@ export function NewFeedbackForm({ categories }: NewFeedbackFormProps) {
             input: classes.input,
           }}
         />
-        <FormSelect options={categories} />
+        <FormSelect
+          label="Category"
+          description="Choose a category for your feedback"
+          options={categories}
+        />
         <Textarea
           variant="filled"
           autosize
