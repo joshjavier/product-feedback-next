@@ -16477,6 +16477,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"mantine-form-valibot-resolver@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "mantine-form-valibot-resolver@npm:3.0.1"
+  peerDependencies:
+    "@mantine/form": ">=7.0.0"
+    valibot: ">=1.0.0 || ^1.0.0-beta || ^1.0.0-rc"
+  checksum: 10c0/d0ed27aef1dde1ae6311a36fa80d372783239082a288ec416dfb67d1f68cb16d7ffb0565bae6b3f51a0f5f72635a58c69a6cc856fa939c3f4398ca6b93a2d282
+  languageName: node
+  linkType: hard
+
 "mantine-next-template@workspace:.":
   version: 0.0.0-use.local
   resolution: "mantine-next-template@workspace:."
@@ -16518,6 +16528,7 @@ __metadata:
     jest: "npm:^29.7.0"
     jest-environment-jsdom: "npm:^29.7.0"
     lint-staged: "npm:^16.0.0"
+    mantine-form-valibot-resolver: "npm:^3.0.1"
     next: "npm:15.2.3"
     pg: "npm:^8.16.0"
     postcss: "npm:^8.5.3"
@@ -16535,6 +16546,7 @@ __metadata:
     ts-node: "npm:^10.9.2"
     typescript: "npm:5.8.2"
     typescript-eslint: "npm:^8.27.0"
+    valibot: "npm:^1.1.0"
     wrangler: "npm:^4.15.2"
   languageName: unknown
   linkType: soft
@@ -21549,6 +21561,18 @@ __metadata:
     "@types/istanbul-lib-coverage": "npm:^2.0.1"
     convert-source-map: "npm:^1.6.0"
   checksum: 10c0/657ef7c52a514c1a0769663f96dd6f2cd11d2d3f6c8272d1035f4a543dca0b52c84b005beb7f0ca215eb98425c8bc4aa92a62826b1fc76abc1f7228d33ccbc60
+  languageName: node
+  linkType: hard
+
+"valibot@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "valibot@npm:1.1.0"
+  peerDependencies:
+    typescript: ">=5"
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+  checksum: 10c0/39580b4e4683cc44398fb775e88c03639dbaa7e6f587df416125916cb6307292d45df18f656054e8846093ced13a2d2fdc98659da6dd104d1d20180edcbd99d4
   languageName: node
   linkType: hard
 
