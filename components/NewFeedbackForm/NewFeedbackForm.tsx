@@ -1,6 +1,11 @@
+'use client';
+
+import { valibotResolver } from 'mantine-form-valibot-resolver';
 import { Button, Stack, Textarea, TextInput } from '@mantine/core';
+import { useForm } from '@mantine/form';
 import IconNewFeedback from '@/icons/icon-new-feedback.svg';
 import { FormSelect } from './FormSelect';
+import { NewFeedbackFormData, newFeedbackSchema } from './schema';
 import classes from './NewFeedbackForm.module.css';
 
 interface NewFeedbackFormProps {
@@ -8,8 +13,22 @@ interface NewFeedbackFormProps {
 }
 
 export function NewFeedbackForm({ categories }: NewFeedbackFormProps) {
+  const form = useForm<NewFeedbackFormData>({
+    mode: 'uncontrolled',
+    initialValues: {
+      title: '',
+      category: categories[0],
+      description: '',
+    },
+    validate: valibotResolver(newFeedbackSchema),
+  });
+
   return (
-    <form aria-labelledby="form-label" className={classes.container}>
+    <form
+      aria-labelledby="form-label"
+      className={classes.container}
+      onSubmit={form.onSubmit((values) => console.log(values))}
+    >
       <IconNewFeedback className={classes.icon} aria-hidden="true" />
       <h1 id="form-label" className={classes.title}>
         Create New Feedback
@@ -25,11 +44,15 @@ export function NewFeedbackForm({ categories }: NewFeedbackFormProps) {
             wrapper: classes.inputWrapper,
             input: classes.input,
           }}
+          key={form.key('title')}
+          {...form.getInputProps('title')}
         />
         <FormSelect
           label="Category"
           description="Choose a category for your feedback"
           options={categories}
+          key={form.key('category')}
+          {...form.getInputProps('category')}
         />
         <Textarea
           variant="filled"
@@ -42,6 +65,8 @@ export function NewFeedbackForm({ categories }: NewFeedbackFormProps) {
             wrapper: classes.inputWrapper,
             input: classes.input,
           }}
+          key={form.key('description')}
+          {...form.getInputProps('description')}
         />
       </Stack>
       <div className={classes.actions}>

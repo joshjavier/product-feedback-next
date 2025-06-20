@@ -1,7 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import React from 'react';
 import { Combobox, InputBase, useCombobox } from '@mantine/core';
+import { useUncontrolled } from '@mantine/hooks';
 import IconArrowDown from '@/icons/icon-arrow-down.svg';
 import IconCheck from '@/icons/icon-check.svg';
 import classes from './NewFeedbackForm.module.css';
@@ -10,21 +11,42 @@ interface FormSelectProps {
   label?: string;
   description?: string;
   options: string[];
+
+  // Props for integrating `getInputProps` with custom inputs
+  value?: string;
+  defaultValue?: string;
+  onChange?: (value: string) => void;
+  onFocus?: (event: React.FocusEvent<HTMLButtonElement>) => void;
+  onBlur?: (event: React.FocusEvent<HTMLButtonElement>) => void;
+  error?: string;
 }
 
-export function FormSelect({ label, description, options }: FormSelectProps) {
+export function FormSelect({
+  label,
+  description,
+  options,
+  value,
+  defaultValue,
+  onChange,
+  ...inputProps
+}: FormSelectProps) {
   const combobox = useCombobox({
     onDropdownClose: () => combobox.resetSelectedOption(),
   });
 
-  const [value, setValue] = useState(options[0]);
+  const [_value, handleChange] = useUncontrolled({
+    value,
+    defaultValue,
+    finalValue: options[0],
+    onChange,
+  });
 
   return (
     <Combobox
       store={combobox}
       resetSelectionOnOptionHover
       onOptionSubmit={(val) => {
-        setValue(val);
+        handleChange(val);
         combobox.closeDropdown();
       }}
       classNames={{ dropdown: classes.dropdown, option: classes.option }}
@@ -48,8 +70,9 @@ export function FormSelect({ label, description, options }: FormSelectProps) {
             wrapper: classes.inputWrapper,
             input: classes.input,
           }}
+          {...inputProps}
         >
-          {value}
+          {_value}
         </InputBase>
       </Combobox.Target>
 
@@ -59,11 +82,11 @@ export function FormSelect({ label, description, options }: FormSelectProps) {
             <Combobox.Option
               value={item}
               key={item}
-              active={item === value}
-              aria-selected={item === value}
+              active={item === _value}
+              aria-selected={item === _value}
             >
               {item}
-              {item === value && <IconCheck aria-hidden="true" />}
+              {item === _value && <IconCheck aria-hidden="true" />}
             </Combobox.Option>
           ))}
         </Combobox.Options>
