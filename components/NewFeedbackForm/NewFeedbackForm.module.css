@@ -26,6 +26,10 @@
   margin-block: rem(24px) rem(40px);
 }
 
+.fieldRoot[data-error] {
+  --mantine-color-error: #d73737;
+}
+
 .label,
 .description {
   font-size: inherit;
@@ -43,7 +47,7 @@
 }
 
 .inputWrapper {
-  margin-top: rem(16px);
+  margin-block: rem(16px) 0;
   --input-section-color: var(--mantine-color-blue-4);
   --px: rem(16px);
 }
@@ -73,6 +77,12 @@
   &[data-expanded] + [data-position='right'] > * {
     rotate: 180deg;
   }
+}
+
+.error {
+  font-size: inherit;
+  line-height: normal;
+  margin-top: rem(4px);
 }
 
 .dropdown {

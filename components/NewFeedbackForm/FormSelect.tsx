@@ -65,10 +65,12 @@ export function FormSelect({
           label={label}
           description={description}
           classNames={{
+            root: classes.fieldRoot,
             label: classes.label,
             description: classes.description,
             wrapper: classes.inputWrapper,
             input: classes.input,
+            error: classes.error,
           }}
           {...inputProps}
         >

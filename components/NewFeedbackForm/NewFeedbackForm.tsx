@@ -39,10 +39,12 @@ export function NewFeedbackForm({ categories }: NewFeedbackFormProps) {
           label="Feedback Title"
           description="Add a short, descriptive headline"
           classNames={{
+            root: classes.fieldRoot,
             label: classes.label,
             description: classes.description,
             wrapper: classes.inputWrapper,
             input: classes.input,
+            error: classes.error,
           }}
           key={form.key('title')}
           {...form.getInputProps('title')}
@@ -60,10 +62,12 @@ export function NewFeedbackForm({ categories }: NewFeedbackFormProps) {
           label="Feedback Detail"
           description="Include any specific comments on what should be improved, added, etc."
           classNames={{
+            root: classes.fieldRoot,
             label: classes.label,
             description: classes.description,
             wrapper: classes.inputWrapper,
             input: classes.input,
+            error: classes.error,
           }}
           key={form.key('description')}
           {...form.getInputProps('description')}
