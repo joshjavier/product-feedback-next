@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { valibotResolver } from 'mantine-form-valibot-resolver';
 import { Button, Stack, Textarea, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
@@ -77,7 +78,7 @@ export function NewFeedbackForm({ categories }: NewFeedbackFormProps) {
         <Button type="submit" variant="primary">
           Add Feedback
         </Button>
-        <Button type="button" variant="neutral">
+        <Button component={Link} href="/" variant="neutral">
           Cancel
         </Button>
       </div>

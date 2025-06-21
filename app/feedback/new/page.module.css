@@ -14,6 +14,10 @@
   gap: rem(35px);
   padding-block: rem(34px) rem(77px);
 
+  & > :first-child {
+    align-self: flex-start;
+  }
+
   @media (min-width: $mantine-breakpoint-xs) {
     padding-top: rem(56px);
     gap: rem(40px);
