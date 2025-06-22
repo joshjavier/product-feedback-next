@@ -1,6 +1,6 @@
 import { Container } from '@mantine/core';
 import { BackButton } from '@/components/BackButton';
-import { NewFeedbackForm } from '@/components/NewFeedbackForm';
+import { NewFeedbackForm } from '@/components/FeedbackForm';
 import { getDb } from '@/lib/db';
 import classes from './page.module.css';
 

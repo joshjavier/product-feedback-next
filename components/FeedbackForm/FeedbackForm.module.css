@@ -50,5 +50,9 @@
 
   .actions {
     flex-direction: row-reverse;
+
+    & > [data-variant='danger'] {
+      margin-inline-end: auto;
+    }
   }
 }

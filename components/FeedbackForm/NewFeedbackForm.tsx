@@ -7,7 +7,7 @@ import { useForm } from '@mantine/form';
 import IconNewFeedback from '@/icons/icon-new-feedback.svg';
 import { FormField } from './FormField';
 import { NewFeedbackFormData, newFeedbackSchema } from './schema';
-import classes from './NewFeedbackForm.module.css';
+import classes from './FeedbackForm.module.css';
 
 interface NewFeedbackFormProps {
   categories: string[];

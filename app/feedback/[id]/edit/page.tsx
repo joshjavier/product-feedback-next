@@ -1,7 +1,9 @@
-import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { Group, Select, Textarea, TextInput } from '@mantine/core';
+import { Container } from '@mantine/core';
+import { BackButton } from '@/components/BackButton';
+import { EditFeedbackForm } from '@/components/FeedbackForm';
 import { getDb } from '@/lib/db';
+import classes from './page.module.css';
 
 export default async function EditFeedbackPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -21,46 +23,15 @@ export default async function EditFeedbackPage({ params }: { params: Promise<{ i
   const statusOptions = statuses.map((s) => s.name);
 
   return (
-    <>
-      <div>
-        <Link href={`/feedback/${feedback.id}`}>Go Back</Link>
+    <Container size={540} className={classes.container}>
+      <div className={classes.layout}>
+        <BackButton href={`/feedback/${feedback.id}`} />
+        <EditFeedbackForm
+          categories={categoryOptions}
+          statuses={statusOptions}
+          feedback={feedback}
+        />
       </div>
-      <div>
-        <form>
-          <h1>Editing ‘{feedback.title}’</h1>
-          <TextInput
-            label="Feedback Title"
-            description="Add a short, descriptive headline"
-            defaultValue={feedback.title}
-          />
-          <Select
-            label="Category"
-            description="Choose a category for your feedback"
-            data={categoryOptions}
-            defaultValue={feedback.category.name}
-            checkIconPosition="right"
-            allowDeselect={false}
-          />
-          <Select
-            label="Update Status"
-            description="Change feedback state"
-            data={statusOptions}
-            defaultValue={feedback.status.name}
-            checkIconPosition="right"
-            allowDeselect={false}
-          />
-          <Textarea
-            label="Feedback Detail"
-            description="Include any specific comments on what should be improved, added, etc."
-            defaultValue={feedback.description}
-          />
-          <Group justify="flex-end">
-            <button type="button">Delete</button>
-            <button type="button">Cancel</button>
-            <button type="submit">Add Feedback</button>
-          </Group>
-        </form>
-      </div>
-    </>
+    </Container>
   );
 }
