@@ -5,7 +5,7 @@ import { Combobox, InputBase, useCombobox } from '@mantine/core';
 import { useUncontrolled } from '@mantine/hooks';
 import IconArrowDown from '@/icons/icon-arrow-down.svg';
 import IconCheck from '@/icons/icon-check.svg';
-import classes from './NewFeedbackForm.module.css';
+import classes from './FormField.module.css';
 
 interface FormSelectProps {
   label?: string;
