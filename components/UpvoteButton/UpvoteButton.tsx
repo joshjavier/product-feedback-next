@@ -8,9 +8,10 @@ import classes from './UpvoteButton.module.css';
 interface UpvoteButtonProps {
   // pressed?: boolean;
   upvotes: number;
+  orientation?: 'horizontal' | 'vertical';
 }
 
-export function UpvoteButton({ upvotes }: UpvoteButtonProps) {
+export function UpvoteButton({ upvotes, orientation }: UpvoteButtonProps) {
   const [pressed, setPressed] = useState(false);
 
   return (
@@ -21,6 +22,7 @@ export function UpvoteButton({ upvotes }: UpvoteButtonProps) {
       leftSection={<IconArrowUp aria-hidden="true" className={classes.icon} />}
       aria-label="Upvote feedback"
       aria-description={`${upvotes} ${upvotes === 1 ? 'upvote' : 'upvotes'}`}
+      data-orientation={orientation}
     >
       <span aria-hidden="true">{upvotes}</span>
     </Button>

@@ -26,3 +26,9 @@
     letter-spacing: -0.22px;
   }
 }
+
+@container (max-width: 300px) {
+  .container {
+    gap: rem(4px);
+  }
+}

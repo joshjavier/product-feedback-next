@@ -1,0 +1,63 @@
+.container {
+  box-sizing: content-box;
+  padding-inline: rem(24px);
+
+  @media (min-width: $mantine-breakpoint-xs) {
+    padding-inline: rem(40px);
+  }
+}
+
+.layout {
+  padding-bottom: rem(98px);
+
+  @media (min-width: $mantine-breakpoint-sm) {
+    padding-top: rem(56px);
+    --space-under-header: rem(32px);
+  }
+
+  @media (min-width: $mantine-breakpoint-md) {
+    padding-top: rem(78px);
+    --space-under-header: rem(48px);
+  }
+}
+
+.header {
+  background-color: var(--mantine-color-neutral-9);
+  color: #fff;
+  padding: rem(26px) rem(24px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: rem(13px);
+  margin-bottom: var(--space-under-header);
+
+  & .title {
+    font-size: rem(18px);
+    letter-spacing: -0.25px;
+    margin-block: rem(3px) 0;
+  }
+
+  @media (min-width: $mantine-breakpoint-xs) {
+    font-size: rem(14px);
+    padding: rem(27px) rem(32px);
+
+    & .title {
+      font-size: rem(24px);
+      letter-spacing: -0.33px;
+      margin-top: rem(4px);
+    }
+  }
+
+  @media (min-width: $mantine-breakpoint-sm) {
+    border-radius: rem(10px);
+  }
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    width: 100vw;
+    margin-inline-start: rem(-40px);
+  }
+
+  @mixin smaller-than $mantine-breakpoint-xs {
+    margin-inline-start: rem(-24px);
+  }
+}

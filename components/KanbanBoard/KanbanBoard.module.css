@@ -1,0 +1,113 @@
+.tablist {
+  margin-bottom: rem(24px);
+  width: 100vw;
+  margin-inline-start: rem(-24px);
+
+  @media (min-width: $mantine-breakpoint-xs) {
+    margin-inline-start: rem(-40px);
+  }
+
+  &::before {
+    border-color: alpha(#8c92b3, 0.25);
+    border-width: 0 0 1px;
+  }
+}
+
+.tab {
+  font-weight: 700;
+  font-size: rem(13px);
+  line-height: normal;
+  letter-spacing: -0.18px;
+  padding-inline: rem(20px);
+  padding-block: rem(20px) rem(16px);
+  border-radius: 0;
+  --tab-border-width: 0 0 rem(4px) 0;
+
+  &[aria-selected='false'] {
+    opacity: 0.4;
+  }
+
+  @media (min-width: $mantine-breakpoint-xs) {
+    font-size: rem(14px);
+  }
+}
+
+.column {
+  container-type: inline-size;
+}
+
+.title {
+  font-size: rem(18px);
+  letter-spacing: -0.25px;
+  margin-block: 0;
+}
+
+.description {
+  margin-block: rem(4px) 0;
+  font-size: rem(13px);
+  color: var(--mantine-color-neutral-6);
+}
+
+.list {
+  margin-block: rem(24px) 0;
+  padding-inline-start: 0;
+  list-style-type: none;
+  --space-between-cards: rem(16px);
+
+  & > li + li {
+    margin-top: var(--space-between-cards);
+  }
+}
+
+@mixin smaller-than $mantine-breakpoint-sm {
+  .tabpanel {
+    max-inline-size: rem(400px);
+    margin-inline: auto;
+  }
+}
+
+@media (min-width: $mantine-breakpoint-sm) {
+  .title,
+  .description {
+    font-size: rem(14px);
+  }
+
+  .title {
+    letter-spacing: -0.19px;
+  }
+
+  /* From tablet viewport, hide tabs and show all three kanban columns */
+  .tablist {
+    display: none;
+  }
+
+  .tabpanel {
+    display: block !important;
+  }
+
+  .tabroot {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: rem(10px);
+  }
+}
+
+@media (min-width: $mantine-breakpoint-md) {
+  .tabroot {
+    gap: rem(30px);
+  }
+
+  .title {
+    font-size: rem(18px);
+    letter-spacing: -0.25px;
+  }
+
+  .description {
+    font-size: rem(16px);
+  }
+
+  .list {
+    margin-top: rem(32px);
+    --space-between-cards: rem(24px);
+  }
+}

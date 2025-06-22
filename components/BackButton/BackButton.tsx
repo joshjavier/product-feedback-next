@@ -5,11 +5,18 @@ import classes from './BackButton.module.css';
 
 interface BackButtonProps {
   href?: string;
+  variant?: string;
 }
 
-export function BackButton({ href = '/' }: BackButtonProps) {
+export function BackButton({ href = '/', variant }: BackButtonProps) {
   return (
-    <Anchor component={Link} href={href} underline="hover" className={classes.link}>
+    <Anchor
+      component={Link}
+      href={href}
+      underline="hover"
+      className={classes.link}
+      variant={variant}
+    >
       <IconArrowLeft aria-hidden="true" />
       <span>Go Back</span>
     </Anchor>

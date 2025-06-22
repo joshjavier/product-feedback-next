@@ -1,0 +1,135 @@
+.card {
+  position: relative;
+  border-radius: rem(5px);
+  background-color: #fff;
+  padding: rem(22px) rem(24px) rem(24px);
+  font-size: rem(13px);
+  container-type: inline-size;
+  min-height: rem(233px);
+  display: flex;
+  flex-direction: column;
+  --status-gap: rem(8px);
+
+  & :where(*) {
+    margin-block: 0;
+  }
+
+  &.s-planned {
+    --status-color: var(--mantine-color-orange-3);
+  }
+
+  &.s-inprogress {
+    --status-color: var(--mantine-color-grape-6);
+  }
+
+  &.s-live {
+    --status-color: var(--mantine-color-blue-3);
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    height: rem(6px);
+    width: 100%;
+    top: 0;
+    left: 0;
+    background-color: var(--status-color);
+    border-top-left-radius: rem(5px);
+    border-top-right-radius: rem(5px);
+  }
+
+  @media (min-width: $mantine-breakpoint-xs) {
+    --status-gap: rem(16px);
+  }
+}
+
+.status {
+  color: var(--mantine-color-neutral-6);
+  margin-bottom: rem(16px);
+
+  &::before {
+    content: '';
+    display: inline-block;
+    margin-inline-end: var(--status-gap);
+    width: rem(8px);
+    height: rem(8px);
+    border-radius: 999px;
+    background-color: var(--status-color, var(--mantine-color-neutral-6));
+  }
+}
+
+.title {
+  font-size: inherit;
+  letter-spacing: -0.18px;
+
+  & a {
+    text-decoration: none;
+    color: inherit;
+
+    @mixin hover {
+      color: var(--mantine-color-blue-4);
+    }
+  }
+}
+
+.description {
+  color: var(--mantine-color-neutral-6);
+  margin-block: rem(9px) rem(8px);
+  text-wrap: pretty;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+.category {
+  display: inline-block;
+  min-width: rem(48px);
+  padding: rem(5px) rem(16px) rem(6px);
+  border-radius: rem(10px);
+  background-color: var(--mantine-color-neutral-1);
+  color: var(--mantine-color-blue-4);
+  font-weight: 600;
+  font-size: rem(13px);
+  margin-top: auto;
+  align-self: flex-start;
+}
+
+.counts {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: rem(16px);
+}
+
+@container (max-width: 300px) {
+  .card {
+    min-height: rem(251px);
+    padding: rem(26px) rem(20px) rem(24px);
+  }
+
+  .status {
+    margin-bottom: rem(14px);
+  }
+}
+
+@media (min-width: $mantine-breakpoint-md) {
+  .card {
+    font-size: rem(16px);
+    min-height: rem(272px);
+    padding: rem(31px) rem(32px) rem(32px);
+  }
+
+  .status {
+    margin-bottom: rem(8px);
+  }
+
+  .title {
+    font-size: rem(18px);
+    letter-spacing: -0.25px;
+  }
+
+  .description {
+    margin-block: rem(4px) rem(16px);
+  }
+}

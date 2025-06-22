@@ -1,82 +1,36 @@
-import Link from 'next/link';
+import { Container } from '@mantine/core';
+import { AddFeedbackButton } from '@/components/AddFeedbackButton';
+import { BackButton } from '@/components/BackButton';
+import { KanbanBoard } from '@/components/KanbanBoard';
 import { getDb } from '@/lib/db';
+import classes from './page.module.css';
 
 export default async function RoadmapPage() {
   const db = getDb();
   const frInRoadmap = await db.feedbackRequest.findMany({
     where: { NOT: { status: { name: 'Suggestion' } } },
-    include: {
+    select: {
+      id: true,
+      title: true,
+      description: true,
       status: { select: { name: true } },
       category: { select: { name: true } },
-      _count: { select: { upvotes: true, comments: true } },
+      _count: { select: { comments: true, upvotes: true } },
     },
   });
 
-  const plannedRequests = frInRoadmap.filter(({ status }) => status.name === 'Planned');
-  const inProgressRequests = frInRoadmap.filter(({ status }) => status.name === 'In-Progress');
-  const liveRequests = frInRoadmap.filter(({ status }) => status.name === 'Live');
-
   return (
-    <>
-      <div>
-        <Link href="/">Go Back</Link>
-        <h1>Roadmap</h1>
-        <button type="button">Add Feedback</button>
+    <Container size={1110} className={classes.container}>
+      <div className={classes.layout}>
+        <div className={classes.header}>
+          <div>
+            <BackButton variant="white" />
+            <h1 className={classes.title}>Roadmap</h1>
+          </div>
+          <AddFeedbackButton />
+        </div>
+        <KanbanBoard feedbackRequests={frInRoadmap} />
       </div>
-
-      {/* PLANNED */}
-      <div>
-        <h2>Planned ({plannedRequests.length})</h2>
-        <p>Ideas prioritized for research</p>
-        <ul>
-          {plannedRequests.map((item) => (
-            <li key={item.id}>
-              <p>{item.status.name}</p>
-              <p>{item.title}</p>
-              <p>{item.description}</p>
-              <p>{item.category.name}</p>
-              <p>{item._count.upvotes}</p>
-              <p>{item._count.comments}</p>
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      {/* IN-PROGRESS */}
-      <div>
-        <h2>In-Progress ({inProgressRequests.length})</h2>
-        <p>Currently being developed</p>
-        <ul>
-          {inProgressRequests.map((item) => (
-            <li key={item.id}>
-              <p>{item.status.name}</p>
-              <p>{item.title}</p>
-              <p>{item.description}</p>
-              <p>{item.category.name}</p>
-              <p>{item._count.upvotes}</p>
-              <p>{item._count.comments}</p>
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      {/* LIVE */}
-      <div>
-        <h2>Live ({liveRequests.length})</h2>
-        <p>Released features</p>
-        <ul>
-          {liveRequests.map((item) => (
-            <li key={item.id}>
-              <p>{item.status.name}</p>
-              <p>{item.title}</p>
-              <p>{item.description}</p>
-              <p>{item.category.name}</p>
-              <p>{item._count.upvotes}</p>
-              <p>{item._count.comments}</p>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </>
+    </Container>
   );
 }

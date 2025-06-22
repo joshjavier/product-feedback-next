@@ -31,6 +31,12 @@
   & [data-position='left'] {
     margin: 0;
   }
+
+  @media (min-width: $mantine-breakpoint-lg) {
+    &:where([data-orientation='horizontal']) {
+      min-height: rem(40px);
+    }
+  }
 }
 
 .icon {
