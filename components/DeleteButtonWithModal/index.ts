@@ -1,0 +1,1 @@
+export { DeleteButtonWithModal } from './DeleteButtonWithModal';

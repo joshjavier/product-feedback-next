@@ -1,11 +1,18 @@
 'use client';
 
+import { startTransition, useActionState, useEffect } from 'react';
+import Link from 'next/link';
+import { IconCheck, IconX } from '@tabler/icons-react';
 import { valibotResolver } from 'mantine-form-valibot-resolver';
 import { Button, Stack } from '@mantine/core';
 import { useForm } from '@mantine/form';
+import { notifications } from '@mantine/notifications';
 import IconEditFeedback from '@/icons/icon-edit-feedback.svg';
+import { deleteFeedback, editFeedback } from '@/lib/actions';
+import { EditFeedbackFormData, editFeedbackSchema } from '@/lib/schema';
+import { FeedbackMutationResult } from '@/lib/types';
+import { DeleteButtonWithModal } from '../DeleteButtonWithModal';
 import { FormField } from './FormField';
-import { EditFeedbackFormData, editFeedbackSchema } from './schema';
 import classes from './FeedbackForm.module.css';
 
 interface EditFeedbackFormProps {
@@ -32,11 +39,72 @@ export function EditFeedbackForm({ categories, statuses, feedback }: EditFeedbac
     validate: valibotResolver(editFeedbackSchema),
   });
 
+  const [editResult, editAction, isEditPending] = useActionState<
+    FeedbackMutationResult,
+    EditFeedbackFormData
+  >(editFeedback.bind(null, feedback.id), { success: false });
+
+  const [deleteResult, deleteAction, isDeletePending] = useActionState<FeedbackMutationResult>(
+    deleteFeedback.bind(null, feedback.id),
+    { success: false }
+  );
+
+  useEffect(() => {
+    if (!form.isTouched()) {
+      return;
+    }
+
+    if (editResult.success) {
+      notifications.show({
+        title: editResult.title ?? 'All good!',
+        message: editResult.message,
+        icon: <IconCheck />,
+        color: 'teal',
+      });
+      form.resetDirty();
+    } else {
+      if (editResult.errors) {
+        form.setErrors(editResult.errors);
+      }
+      notifications.show({
+        title: editResult.title ?? 'Bummer!',
+        message: editResult.message ?? 'Something went wrong.',
+        icon: <IconX />,
+        color: 'red',
+      });
+    }
+  }, [editResult]);
+
+  useEffect(() => {
+    if (!deleteResult.success && deleteResult.message) {
+      notifications.show({
+        title: 'Bummer!',
+        message: deleteResult.message,
+        icon: <IconX />,
+        color: 'red',
+      });
+    }
+  }, [deleteResult]);
+
+  const handleSubmit = (values: EditFeedbackFormData) => {
+    if (!form.isDirty()) {
+      notifications.show({
+        message: 'No changes to save.',
+        color: 'gray',
+      });
+      return;
+    }
+
+    startTransition(() => {
+      editAction(values);
+    });
+  };
+
   return (
     <form
       aria-labelledby="form-label"
       className={classes.container}
-      onSubmit={form.onSubmit((values) => console.log(values))}
+      onSubmit={form.onSubmit(handleSubmit)}
     >
       <IconEditFeedback className={classes.icon} aria-hidden="true" />
       <h1 id="form-label" className={classes.title}>
@@ -75,15 +143,27 @@ export function EditFeedbackForm({ categories, statuses, feedback }: EditFeedbac
         />
       </Stack>
       <div className={classes.actions}>
-        <Button type="submit" variant="primary">
+        <Button
+          type="submit"
+          variant="primary"
+          loading={isEditPending}
+          loaderProps={{ type: 'dots' }}
+        >
           Save Changes
         </Button>
-        <Button type="button" variant="neutral">
+        <Button component={Link} href={`/feedback/${feedback.id}`} variant="neutral">
           Cancel
         </Button>
-        <Button type="button" variant="danger">
-          Delete
-        </Button>
+        <DeleteButtonWithModal
+          deleteAction={deleteAction}
+          confirmModalProps={{
+            title: 'Delete this feedback?',
+            description: 'All comments and replies of this feedback will be permanently deleted.',
+          }}
+          successModalProps={{ message: deleteResult.message }}
+          isPending={isDeletePending}
+          isSuccess={deleteResult.success}
+        />
       </div>
     </form>
   );

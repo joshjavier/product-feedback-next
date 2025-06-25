@@ -1,14 +1,15 @@
 import Link from 'next/link';
-import { Anchor } from '@mantine/core';
+import { Anchor, AnchorProps } from '@mantine/core';
 import IconArrowLeft from '@/icons/icon-arrow-left.svg';
 import classes from './BackButton.module.css';
 
-interface BackButtonProps {
+type BackButtonProps = AnchorProps & {
   href?: string;
+  label?: string;
   variant?: string;
-}
+};
 
-export function BackButton({ href = '/', variant }: BackButtonProps) {
+export function BackButton({ href = '/', label = 'Go Back', variant, ...props }: BackButtonProps) {
   return (
     <Anchor
       component={Link}
@@ -16,9 +17,10 @@ export function BackButton({ href = '/', variant }: BackButtonProps) {
       underline="hover"
       className={classes.link}
       variant={variant}
+      {...props}
     >
       <IconArrowLeft aria-hidden="true" />
-      <span>Go Back</span>
+      <span>{label}</span>
     </Anchor>
   );
 }

@@ -1,12 +1,14 @@
 'use client';
 
+import { startTransition, useActionState, useEffect } from 'react';
 import Link from 'next/link';
 import { valibotResolver } from 'mantine-form-valibot-resolver';
 import { Button, Stack } from '@mantine/core';
-import { useForm } from '@mantine/form';
+import { FormErrors, useForm } from '@mantine/form';
 import IconNewFeedback from '@/icons/icon-new-feedback.svg';
+import { createFeedback } from '@/lib/actions';
+import { NewFeedbackFormData, newFeedbackSchema } from '@/lib/schema';
 import { FormField } from './FormField';
-import { NewFeedbackFormData, newFeedbackSchema } from './schema';
 import classes from './FeedbackForm.module.css';
 
 interface NewFeedbackFormProps {
@@ -24,11 +26,26 @@ export function NewFeedbackForm({ categories }: NewFeedbackFormProps) {
     validate: valibotResolver(newFeedbackSchema),
   });
 
+  const [formErrors, formAction, isPending] = useActionState<FormErrors, NewFeedbackFormData>(
+    createFeedback,
+    form.errors
+  );
+
+  useEffect(() => {
+    form.setErrors(formErrors);
+  }, [formErrors]);
+
+  const handleSubmit = (values: NewFeedbackFormData) => {
+    startTransition(() => {
+      formAction(values);
+    });
+  };
+
   return (
     <form
       aria-labelledby="form-label"
       className={classes.container}
-      onSubmit={form.onSubmit((values) => console.log(values))}
+      onSubmit={form.onSubmit(handleSubmit)}
     >
       <IconNewFeedback className={classes.icon} aria-hidden="true" />
       <h1 id="form-label" className={classes.title}>
@@ -59,7 +76,7 @@ export function NewFeedbackForm({ categories }: NewFeedbackFormProps) {
         />
       </Stack>
       <div className={classes.actions}>
-        <Button type="submit" variant="primary">
+        <Button type="submit" variant="primary" loading={isPending} loaderProps={{ type: 'dots' }}>
           Add Feedback
         </Button>
         <Button component={Link} href="/" variant="neutral">

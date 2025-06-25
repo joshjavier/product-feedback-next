@@ -1,0 +1,16 @@
+.root {
+  --mb-padding: rem(24px);
+}
+
+.content {
+  margin-bottom: 10vh; /* optical centering */
+}
+
+.title {
+  font-weight: 700;
+  font-size: var(--mantine-font-size-lg);
+}
+
+.body {
+  color: var(--mantine-color-neutral-6);
+}
