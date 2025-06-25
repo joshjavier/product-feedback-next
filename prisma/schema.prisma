@@ -33,7 +33,7 @@ model User {
 
 model Status {
   id       Int               @id(map: "pk_status") @default(autoincrement())
-  name     String            @db.VarChar(50)
+  name     String            @unique(map: "unique_status") @db.VarChar(50)
   requests FeedbackRequest[]
 
   @@map("status")
@@ -41,7 +41,7 @@ model Status {
 
 model Category {
   id       Int               @id(map: "pk_category") @default(autoincrement())
-  name     String            @db.VarChar(50)
+  name     String            @unique(map: "unique_category") @db.VarChar(50)
   requests FeedbackRequest[]
 
   @@map("category")
