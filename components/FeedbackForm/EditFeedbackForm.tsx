@@ -4,8 +4,8 @@ import { valibotResolver } from 'mantine-form-valibot-resolver';
 import { Button, Stack } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import IconEditFeedback from '@/icons/icon-edit-feedback.svg';
+import { EditFeedbackFormData, editFeedbackSchema } from '@/lib/schema';
 import { FormField } from './FormField';
-import { EditFeedbackFormData, editFeedbackSchema } from './schema';
 import classes from './FeedbackForm.module.css';
 
 interface EditFeedbackFormProps {

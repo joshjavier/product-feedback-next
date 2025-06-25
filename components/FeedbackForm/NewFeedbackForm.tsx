@@ -5,8 +5,8 @@ import { valibotResolver } from 'mantine-form-valibot-resolver';
 import { Button, Stack } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import IconNewFeedback from '@/icons/icon-new-feedback.svg';
+import { NewFeedbackFormData, newFeedbackSchema } from '@/lib/schema';
 import { FormField } from './FormField';
-import { NewFeedbackFormData, newFeedbackSchema } from './schema';
 import classes from './FeedbackForm.module.css';
 
 interface NewFeedbackFormProps {
