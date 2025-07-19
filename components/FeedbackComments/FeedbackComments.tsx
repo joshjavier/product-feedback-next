@@ -1,44 +1,30 @@
-import { Fragment } from 'react';
-import { Divider } from '@mantine/core';
-import { CommentBlock } from './CommentBlock';
+import { Suspense } from 'react';
+import { getDb } from '@/lib/db';
+import { CommentBlocks } from './CommentBlocks';
+import { CommentBlocksSkeleton } from './Skeleton';
+import { commentWithReplies } from './types';
 import classes from './FeedbackComments.module.css';
 
 interface FeedbackCommentsProps {
   count: number;
-  comments: {
-    id: number;
-    content: string;
-    author: {
-      name: string;
-      username: string;
-      avatarUrl: string | null;
-    };
-    replyToUser?: { username: string } | null;
-    replies: {
-      id: number;
-      content: string;
-      author: {
-        name: string;
-        username: string;
-        avatarUrl: string | null;
-      };
-      replyToUser: { username: string } | null;
-    }[];
-  }[];
+  feedbackId: number;
 }
 
-export function FeedbackComments({ count, comments }: FeedbackCommentsProps) {
+export function FeedbackComments({ count, feedbackId }: FeedbackCommentsProps) {
+  const db = getDb();
+  const commentsPromise = db.comment.findMany({
+    where: { feedbackRequestId: feedbackId, parentCommentId: null },
+    select: commentWithReplies,
+  });
+
   return (
     <section className={classes.container}>
       <h2 className={classes.title}>
         {count} {count === 1 ? 'Comment' : 'Comments'}
       </h2>
-      {comments.map((comment, i, arr) => (
-        <Fragment key={comment.id}>
-          <CommentBlock comment={comment} />
-          {i + 1 < arr.length && <Divider className={classes.divider} />}
-        </Fragment>
-      ))}
+      <Suspense fallback={<CommentBlocksSkeleton count={count} />}>
+        <CommentBlocks commentsPromise={commentsPromise} />
+      </Suspense>
     </section>
   );
 }

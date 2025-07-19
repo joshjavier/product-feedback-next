@@ -20,19 +20,6 @@ export default async function FeedbackDetailPage({ params }: { params: Promise<{
     notFound();
   }
 
-  const comments = await db.comment.findMany({
-    where: { feedbackRequestId: Number(id), parentCommentId: null },
-    include: {
-      author: { select: { name: true, username: true, avatarUrl: true } },
-      replies: {
-        include: {
-          author: { select: { name: true, username: true, avatarUrl: true } },
-          replyToUser: { select: { username: true } },
-        },
-      },
-    },
-  });
-
   return (
     <Container size={730} className={classes.container}>
       <div className={classes.layout}>
@@ -44,9 +31,9 @@ export default async function FeedbackDetailPage({ params }: { params: Promise<{
         </div>
         <Box component="article" display="contents">
           <SuggestionCard suggestion={feedback} />
-          <FeedbackComments count={feedback._count.comments} comments={comments} />
+          <FeedbackComments count={feedback._count.comments} feedbackId={feedback.id} />
         </Box>
-        <AddCommentForm />
+        <AddCommentForm feedbackId={feedback.id} />
       </div>
     </Container>
   );

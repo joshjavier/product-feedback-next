@@ -1,0 +1,17 @@
+.header {
+  gap: 16px;
+
+  @media (min-width: $mantine-breakpoint-xs) {
+    gap: 32px;
+  }
+}
+
+.avatar {
+  flex-shrink: 0;
+}
+
+.body {
+  @media (min-width: $mantine-breakpoint-xs) {
+    margin-left: 72px;
+  }
+}

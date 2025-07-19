@@ -1,15 +1,19 @@
 import { render, screen, userEvent } from '@/test-utils';
 import { AddCommentForm } from './AddCommentForm';
 
+jest.mock('../../lib/actions', () => ({
+  createComment: jest.fn(),
+}));
+
 describe('AddCommentForm component', () => {
   it('has an accessible textbox and submit button', () => {
-    render(<AddCommentForm />);
+    render(<AddCommentForm feedbackId={1} />);
     expect(screen.getByRole('textbox', { name: /add comment/i })).toBeVisible();
     expect(screen.getByRole('button', { name: /post comment/i })).toBeVisible();
   });
 
   it('shows the number of characters left', async () => {
-    render(<AddCommentForm />);
+    render(<AddCommentForm feedbackId={1} />);
     const user = userEvent.setup();
 
     expect(screen.getByText(/250 characters left/i)).toBeVisible();
@@ -20,7 +24,7 @@ describe('AddCommentForm component', () => {
   });
 
   it('prevents form submission if character limit is exceeded', async () => {
-    render(<AddCommentForm />);
+    render(<AddCommentForm feedbackId={1} />);
     const user = userEvent.setup();
     const stringWithMoreThan250Chars =
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec orci ex, blandit eget suscipit id, rhoncus et velit. Morbi at mattis enim. Morbi porttitor, neque eget ullamcorper imperdiet, neque eros pulvinar justo, et bibendum erat orci sit amet aliquam.';

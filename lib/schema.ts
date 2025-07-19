@@ -21,5 +21,12 @@ export const editFeedbackSchema = v.object({
   description: v.pipe(v.string(), v.nonEmpty('Can’t be empty')),
 });
 
+export const commentSchema = v.pipe(
+  v.string(),
+  v.nonEmpty('Can’t post an empty comment.'),
+  v.maxLength(250, 'Comment must not exceed 250 characters.')
+);
+
 export type NewFeedbackFormData = v.InferInput<typeof newFeedbackSchema>;
 export type EditFeedbackFormData = v.InferInput<typeof editFeedbackSchema>;
+export type CommentFormData = v.InferInput<typeof commentSchema>;

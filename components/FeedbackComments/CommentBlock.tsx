@@ -3,23 +3,11 @@
 import { Avatar, Button, Flex } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { AddReplyForm } from './AddReplyForm';
+import { CommentWithReplies } from './types';
 import classes from './CommentBlock.module.css';
 
-interface Comment {
-  id: number;
-  content: string;
-  author: {
-    name: string;
-    username: string;
-    avatarUrl: string | null;
-  };
-  replyToUser?: { username: string } | null;
-}
-
 interface CommentBlockProps {
-  comment: Comment & {
-    replies?: Comment[];
-  };
+  comment: CommentWithReplies;
 }
 
 export function CommentBlock({ comment }: CommentBlockProps) {
@@ -54,7 +42,7 @@ export function CommentBlock({ comment }: CommentBlockProps) {
           )}
           {comment.content}
         </p>
-        {opened && <AddReplyForm />}
+        {opened && <AddReplyForm commentId={comment.id} />}
       </div>
       {comment.replies && comment.replies.length > 0 && (
         <div className={classes.replies}>
