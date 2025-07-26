@@ -33,7 +33,7 @@ export default async function FeedbackDetailPage({ params }: { params: Promise<{
           <SuggestionCard suggestion={feedback} />
           <FeedbackComments count={feedback._count.comments} feedbackId={feedback.id} />
         </Box>
-        <AddCommentForm />
+        <AddCommentForm feedbackId={feedback.id} />
       </div>
     </Container>
   );

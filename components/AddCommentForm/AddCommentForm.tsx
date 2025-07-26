@@ -1,20 +1,46 @@
 'use client';
 
-import { FormEvent, useState } from 'react';
+import { FormEvent, startTransition, useActionState, useEffect, useState } from 'react';
+import { IconX } from '@tabler/icons-react';
 import { Button, Textarea } from '@mantine/core';
+import { notifications } from '@mantine/notifications';
+import { createComment } from '@/lib/actions';
+import { CommentFormData } from '@/lib/schema';
+import { CommentMutationResult } from '@/lib/types';
 import classes from './AddCommentForm.module.css';
 
 interface AddCommentFormProps {
   charLimit?: number;
+  feedbackId: number;
 }
 
-export function AddCommentForm({ charLimit = 250 }: AddCommentFormProps) {
+export function AddCommentForm({ charLimit = 250, feedbackId }: AddCommentFormProps) {
   const [value, setValue] = useState('');
   const isInvalid = value.length > charLimit;
   const charLeft = charLimit - value.length;
 
+  const [state, formAction, isPending] = useActionState<CommentMutationResult, CommentFormData>(
+    createComment.bind(null, feedbackId),
+    { success: false }
+  );
+
+  useEffect(() => {
+    if (!state.success && state.message) {
+      notifications.show({
+        title: 'Bummer!',
+        message: state.message ?? 'Something went wrong.',
+        icon: <IconX />,
+        color: 'red',
+      });
+    }
+  }, [state]);
+
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    startTransition(() => {
+      formAction(value);
+    });
   };
 
   return (
@@ -36,7 +62,14 @@ export function AddCommentForm({ charLimit = 250 }: AddCommentFormProps) {
         error={isInvalid}
         autosize
       />
-      <Button type="submit" className={classes.button} disabled={isInvalid} variant="primary">
+      <Button
+        type="submit"
+        className={classes.button}
+        disabled={isInvalid}
+        variant="primary"
+        loading={isPending}
+        loaderProps={{ type: 'dots' }}
+      >
         Post Comment
       </Button>
     </form>

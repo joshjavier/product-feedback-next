@@ -6,10 +6,14 @@ const commentAuthor = {
   avatarUrl: true,
 } satisfies Prisma.UserSelect;
 
-export const comment = {
+export const commentBase = {
   id: true,
   author: { select: commentAuthor },
   content: true,
+} satisfies Prisma.CommentSelect;
+
+export const comment = {
+  ...commentBase,
   replyToUser: { select: { username: true } },
 } satisfies Prisma.CommentSelect;
 
@@ -20,5 +24,6 @@ export const commentWithReplies = {
   },
 } satisfies Prisma.CommentSelect;
 
+export type CommentBase = Prisma.CommentGetPayload<{ select: typeof commentBase }>;
 export type Comment = Prisma.CommentGetPayload<{ select: typeof comment }>;
 export type CommentWithReplies = Comment & { replies?: Comment[] };
