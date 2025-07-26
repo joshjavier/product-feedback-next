@@ -1,6 +1,10 @@
 import { render, screen, userEvent } from '@/test-utils';
 import { CommentBlock } from './CommentBlock';
 
+jest.mock('../../lib/actions', () => ({
+  createReply: jest.fn(),
+}));
+
 describe('CommentBlock component', () => {
   const testComment = {
     id: 1,
@@ -10,6 +14,7 @@ describe('CommentBlock component', () => {
       username: 'thejuandelacruz',
       avatarUrl: '/juandelacruz.jpg',
     },
+    replyToUser: null,
   };
 
   it('shows the comment text with the author name and username', () => {
