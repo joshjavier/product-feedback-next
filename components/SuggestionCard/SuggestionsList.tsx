@@ -1,18 +1,10 @@
 import { EmptyState } from './EmptyState';
 import { SuggestionCard } from './SuggestionCard';
+import { Suggestion } from './types';
 import classes from './SuggestionCard.module.css';
 
 interface SuggestionsListProps {
-  suggestions: {
-    id: number;
-    title: string;
-    description: string;
-    category: { name: string };
-    _count: {
-      upvotes: number;
-      comments: number;
-    };
-  }[];
+  suggestions: Suggestion[];
 }
 
 export function SuggestionsList({ suggestions }: SuggestionsListProps) {

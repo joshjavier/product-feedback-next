@@ -5,6 +5,10 @@ jest.mock('../../lib/actions', () => ({
   createComment: jest.fn(),
 }));
 
+jest.mock('next/navigation', () => ({
+  useRouter: jest.fn(),
+}));
+
 describe('AddCommentForm component', () => {
   it('has an accessible textbox and submit button', () => {
     render(<AddCommentForm feedbackId={1} />);

@@ -1,2 +1,2 @@
 export { NewFeedbackForm } from './NewFeedbackForm';
-export { EditFeedbackForm } from './EditFeedbackForm';
+export { EditFeedbackForm, EditFeedbackFormContainer } from './EditFeedbackForm';

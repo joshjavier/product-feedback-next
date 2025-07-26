@@ -1,6 +1,5 @@
 'use server';
 
-import { redirect } from 'next/navigation';
 import { Prisma } from '@prisma/client';
 import * as v from 'valibot';
 import { commentBase } from '@/components/FeedbackComments/types';
@@ -17,7 +16,7 @@ export async function createComment(
     const output = v.parse(commentSchema, value);
 
     const db = getDb();
-    const comment = await db.comment.create({
+    await db.comment.create({
       data: {
         content: output,
         feedbackRequest: { connect: { id: feedbackId } },
@@ -26,8 +25,10 @@ export async function createComment(
       select: commentBase,
     });
 
-    console.log('Created comment:');
-    console.log(comment);
+    return {
+      success: true,
+      message: 'Comment posted.',
+    } satisfies CommentMutationResult;
   } catch (error) {
     let errorMessage = 'Something went wrong';
     if (v.isValiError(error)) {
@@ -41,12 +42,9 @@ export async function createComment(
       message: errorMessage,
     } satisfies CommentMutationResult;
   }
-
-  redirect(`/feedback/${feedbackId}`);
 }
 
 export async function createReply(commentId: number, result: CommentMutationResult, value: string) {
-  let feedbackUrl: string;
   try {
     const output = v.parse(commentSchema, value);
 
@@ -55,7 +53,7 @@ export async function createReply(commentId: number, result: CommentMutationResu
       where: { id: commentId },
       select: { userId: true, parentCommentId: true, feedbackRequestId: true },
     });
-    const reply = await db.comment.create({
+    await db.comment.create({
       data: {
         content: output,
         feedbackRequest: { connect: { id: comment.feedbackRequestId } },
@@ -64,10 +62,11 @@ export async function createReply(commentId: number, result: CommentMutationResu
         parentComment: { connect: { id: comment.parentCommentId ?? commentId } },
       },
     });
-    feedbackUrl = `/feedback/${reply.feedbackRequestId}`;
 
-    console.log('Created reply:');
-    console.log(reply);
+    return {
+      success: true,
+      message: 'Reply posted.',
+    } satisfies CommentMutationResult;
   } catch (error) {
     let errorMessage = 'Something went wrong.';
     if (v.isValiError(error)) {
@@ -86,6 +85,4 @@ export async function createReply(commentId: number, result: CommentMutationResu
       message: errorMessage,
     } satisfies CommentMutationResult;
   }
-
-  redirect(feedbackUrl);
 }

@@ -1,4 +1,4 @@
-import { CommentBase } from '@/components/FeedbackComments/types';
+import { Prisma } from '@prisma/client';
 
 export interface FeedbackMutationSuccess {
   success: true;
@@ -17,7 +17,7 @@ export type FeedbackMutationResult = FeedbackMutationSuccess | FeedbackMutationF
 
 export interface CommentMutationSuccess {
   success: true;
-  data: CommentBase;
+  message?: string;
 }
 
 export interface CommentMutationFailure {
@@ -26,3 +26,15 @@ export interface CommentMutationFailure {
 }
 
 export type CommentMutationResult = CommentMutationSuccess | CommentMutationFailure;
+
+export const feedbackForEditForm = {
+  id: true,
+  title: true,
+  description: true,
+  category: { select: { name: true } },
+  status: { select: { name: true } },
+} satisfies Prisma.FeedbackRequestSelect;
+
+export type FeedbackForEditForm = Prisma.FeedbackRequestGetPayload<{
+  select: typeof feedbackForEditForm;
+}>;

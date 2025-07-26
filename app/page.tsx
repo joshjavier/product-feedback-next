@@ -1,5 +1,6 @@
 import { Container, VisuallyHidden } from '@mantine/core';
 import { SuggestionsList } from '@/components/SuggestionCard';
+import { suggestion } from '@/components/SuggestionCard/types';
 import { SuggestionsHeader } from '@/components/SuggestionsHeader';
 import { SuggestionsNav } from '@/components/SuggestionsNav';
 import { getDb } from '@/lib/db';
@@ -15,6 +16,7 @@ export default async function SuggestionsPage({ searchParams }: SuggestionsPageP
   const categories = await db.category.findMany();
   const statusesWithCount = await db.status.findMany({
     include: { _count: { select: { requests: true } } },
+    orderBy: { id: 'asc' },
   });
 
   const orderBy = {} as any;
@@ -38,7 +40,7 @@ export default async function SuggestionsPage({ searchParams }: SuggestionsPageP
           ? { name: { equals: category, mode: 'insensitive' } }
           : undefined,
     },
-    include: { category: true, _count: { select: { upvotes: true, comments: true } } },
+    select: suggestion,
     orderBy,
   });
 
@@ -46,7 +48,10 @@ export default async function SuggestionsPage({ searchParams }: SuggestionsPageP
     <Container className={classes.container} size={1110}>
       <div className={classes.layout}>
         <div className={classes.aside}>
-          <SuggestionsNav categories={categories} statusesWithCount={statusesWithCount.slice(1)} />
+          <SuggestionsNav
+            categories={categories}
+            statusesWithCount={statusesWithCount.filter((s) => s.name !== 'Suggestion')}
+          />
         </div>
         <div className={classes.main}>
           <SuggestionsHeader suggestionsCount={suggestions.length} />

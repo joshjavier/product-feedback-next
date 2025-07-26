@@ -3,19 +3,11 @@ import Link from 'next/link';
 import { Box, BoxProps, createPolymorphicComponent, Title } from '@mantine/core';
 import { CommentCount } from '../CommentCount';
 import { UpvoteButton } from '../UpvoteButton';
+import { Suggestion } from './types';
 import classes from './SuggestionCard.module.css';
 
 interface SuggestionCardProps extends BoxProps {
-  suggestion: {
-    id: number;
-    title: string;
-    description: string;
-    category: { name: string };
-    _count: {
-      upvotes: number;
-      comments: number;
-    };
-  };
+  suggestion: Suggestion;
   withLink?: boolean;
 }
 

@@ -2,32 +2,78 @@
 
 import { startTransition, useActionState, useEffect } from 'react';
 import Link from 'next/link';
+import { notFound, useParams } from 'next/navigation';
 import { IconCheck, IconX } from '@tabler/icons-react';
 import { valibotResolver } from 'mantine-form-valibot-resolver';
-import { Button, Stack } from '@mantine/core';
+import useSWR from 'swr';
+import { Button, LoadingOverlay, Stack } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
 import IconEditFeedback from '@/icons/icon-edit-feedback.svg';
 import { deleteFeedback, editFeedback } from '@/lib/actions';
+import { fetcher, FetcherError } from '@/lib/fetcher';
 import { EditFeedbackFormData, editFeedbackSchema } from '@/lib/schema';
-import { FeedbackMutationResult } from '@/lib/types';
+import { FeedbackForEditForm, FeedbackMutationResult } from '@/lib/types';
+import { BackButton } from '../BackButton';
 import { DeleteButtonWithModal } from '../DeleteButtonWithModal';
 import { FormField } from './FormField';
 import classes from './FeedbackForm.module.css';
 
+interface EditFeedbackFormContainerProps {
+  categories: string[];
+  statuses: string[];
+}
+
 interface EditFeedbackFormProps {
   categories: string[];
   statuses: string[];
-  feedback: {
-    id: number;
-    title: string;
-    description: string;
-    category: { name: string };
-    status: { name: string };
-  };
+  feedback: FeedbackForEditForm;
+  isLoading?: boolean;
 }
 
-export function EditFeedbackForm({ categories, statuses, feedback }: EditFeedbackFormProps) {
+export function EditFeedbackFormContainer({
+  categories,
+  statuses,
+}: EditFeedbackFormContainerProps) {
+  const { id } = useParams<{ id: string }>();
+  const { data, error, isLoading } = useSWR(`/api/feedback/${id}`, fetcher<FeedbackForEditForm>, {
+    fallbackData: {
+      id: Number(id),
+      title: '',
+      description: '',
+      category: { name: 'Feature' },
+      status: { name: 'Suggestion' },
+    },
+    revalidateOnFocus: false,
+  });
+
+  if (error) {
+    if (error instanceof FetcherError && error.status === 404) {
+      notFound();
+    }
+    return <div>failed to load</div>;
+  }
+
+  return (
+    <>
+      <BackButton href={`/feedback/${id}`} />
+      <EditFeedbackForm
+        categories={categories}
+        statuses={statuses}
+        feedback={data}
+        isLoading={isLoading}
+      />
+      ;
+    </>
+  );
+}
+
+export function EditFeedbackForm({
+  categories,
+  statuses,
+  feedback,
+  isLoading,
+}: EditFeedbackFormProps) {
   const form = useForm<EditFeedbackFormData>({
     mode: 'uncontrolled',
     initialValues: {
@@ -48,6 +94,15 @@ export function EditFeedbackForm({ categories, statuses, feedback }: EditFeedbac
     deleteFeedback.bind(null, feedback.id),
     { success: false }
   );
+
+  useEffect(() => {
+    form.setValues({
+      title: feedback.title,
+      description: feedback.description,
+      category: feedback.category.name,
+      status: feedback.status.name,
+    });
+  }, [feedback]);
 
   useEffect(() => {
     if (!form.isTouched()) {
@@ -106,6 +161,7 @@ export function EditFeedbackForm({ categories, statuses, feedback }: EditFeedbac
       className={classes.container}
       onSubmit={form.onSubmit(handleSubmit)}
     >
+      <LoadingOverlay visible={isLoading} zIndex={100} overlayProps={{ radius: 10, blur: 2 }} />
       <IconEditFeedback className={classes.icon} aria-hidden="true" />
       <h1 id="form-label" className={classes.title}>
         Editing &lsquo;{feedback.title}&rsquo;

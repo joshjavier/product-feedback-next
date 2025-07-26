@@ -5,6 +5,10 @@ jest.mock('../../lib/actions', () => ({
   createReply: jest.fn(),
 }));
 
+jest.mock('next/navigation', () => ({
+  useRouter: jest.fn(),
+}));
+
 describe('CommentBlock component', () => {
   const testComment = {
     id: 1,

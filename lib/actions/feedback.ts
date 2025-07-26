@@ -1,5 +1,6 @@
 'use server';
 
+import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import * as v from 'valibot';
 import { FormErrors } from '@mantine/form';
@@ -64,6 +65,8 @@ export async function editFeedback(
       },
     });
 
+    revalidatePath('/roadmap');
+
     return {
       ...result,
       success: true,
@@ -97,6 +100,8 @@ export async function deleteFeedback(id: number, result: FeedbackMutationResult)
   try {
     const db = getDb();
     await db.feedbackRequest.delete({ where: { id } });
+
+    revalidatePath('/roadmap');
 
     return {
       ...result,

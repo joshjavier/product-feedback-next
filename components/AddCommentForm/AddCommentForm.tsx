@@ -1,7 +1,8 @@
 'use client';
 
 import { FormEvent, startTransition, useActionState, useEffect, useState } from 'react';
-import { IconX } from '@tabler/icons-react';
+import { useRouter } from 'next/navigation';
+import { IconCheck, IconX } from '@tabler/icons-react';
 import { Button, Textarea } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
 import { createComment } from '@/lib/actions';
@@ -15,6 +16,7 @@ interface AddCommentFormProps {
 }
 
 export function AddCommentForm({ charLimit = 250, feedbackId }: AddCommentFormProps) {
+  const router = useRouter();
   const [value, setValue] = useState('');
   const isInvalid = value.length > charLimit;
   const charLeft = charLimit - value.length;
@@ -25,6 +27,21 @@ export function AddCommentForm({ charLimit = 250, feedbackId }: AddCommentFormPr
   );
 
   useEffect(() => {
+    if (isPending) {
+      return;
+    }
+
+    if (state.success) {
+      setValue('');
+      router.refresh();
+      notifications.show({
+        title: 'Success!',
+        message: state.message,
+        icon: <IconCheck />,
+        color: 'teal',
+      });
+    }
+
     if (!state.success && state.message) {
       notifications.show({
         title: 'Bummer!',
@@ -33,7 +50,7 @@ export function AddCommentForm({ charLimit = 250, feedbackId }: AddCommentFormPr
         color: 'red',
       });
     }
-  }, [state]);
+  }, [state, isPending]);
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();

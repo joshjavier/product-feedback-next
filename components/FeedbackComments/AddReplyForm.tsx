@@ -1,46 +1,28 @@
 'use client';
 
-import { FormEvent, startTransition, useActionState, useEffect, useState } from 'react';
-import { IconX } from '@tabler/icons-react';
+import { FormEvent, startTransition, useState } from 'react';
 import { Button, Textarea } from '@mantine/core';
-import { notifications } from '@mantine/notifications';
-import { createReply } from '@/lib/actions';
-import { CommentFormData } from '@/lib/schema';
-import { CommentMutationResult } from '@/lib/types';
 import classes from './AddReplyForm.module.css';
 
 interface AddReplyFormProps {
   charLimit?: number;
-  commentId: number;
+  createReply?: (content: string) => void;
+  loading?: boolean;
 }
 
-export function AddReplyForm({ charLimit = 250, commentId }: AddReplyFormProps) {
+export function AddReplyForm({ charLimit = 250, createReply, loading }: AddReplyFormProps) {
   const [value, setValue] = useState('');
   const isInvalid = value.length > 250;
   const charLeft = charLimit - value.length;
 
-  const [state, formAction, isPending] = useActionState<CommentMutationResult, CommentFormData>(
-    createReply.bind(null, commentId),
-    { success: false }
-  );
-
-  useEffect(() => {
-    if (!state.success && state.message) {
-      notifications.show({
-        title: 'Oops!',
-        message: state.message ?? 'Something went wrong',
-        icon: <IconX />,
-        color: 'red',
-      });
-    }
-  }, [state]);
-
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    startTransition(() => {
-      formAction(value);
-    });
+    if (createReply) {
+      startTransition(() => {
+        createReply(value);
+      });
+    }
   };
 
   return (
@@ -60,7 +42,7 @@ export function AddReplyForm({ charLimit = 250, commentId }: AddReplyFormProps) 
         disabled={isInvalid}
         className={classes.button}
         variant="primary"
-        loading={isPending}
+        loading={loading}
         loaderProps={{ type: 'dots' }}
       >
         Post Reply
