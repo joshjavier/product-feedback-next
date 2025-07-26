@@ -42,7 +42,7 @@ export function CommentBlock({ comment }: CommentBlockProps) {
           )}
           {comment.content}
         </p>
-        {opened && <AddReplyForm />}
+        {opened && <AddReplyForm commentId={comment.id} />}
       </div>
       {comment.replies && comment.replies.length > 0 && (
         <div className={classes.replies}>
